@@ -13,8 +13,10 @@ wss.on('connection', function connection(ws, req) {
   try {
     ws.on('message', function incoming(message) {
       wss.clients.forEach((client) => {
-        console.log(client.id)
-        client.send(message)
+        const jsonData = JSON.parse(message)
+        if(jsonData.type === "TO-OTHER") {
+          client.send(JSON.stringify(jsonData))
+        }
       })
     });
     ws.on('error', msg => console.error(msg))
