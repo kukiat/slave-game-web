@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
+import querystring from 'querystring'
 
 class App extends Component {
   constructor() {
     super()
+    const url = querystring.parse(window.location.search.substring(1))
     const socket = new WebSocket(process.env.REACT_APP_SERVER_HOST || 'wss://' + window.location.host)
+    const urlName = url && url.room
+    socket.onopen = function() {
+      if(urlName) {
+        this.onJoinGame()
+      }
+    }.bind(this)
     socket.onmessage = (message) => {
-      console.log('message')
       const jsonData = JSON.parse(message.data)
       if(jsonData.type === "TO-OTHER") {
         this.setState({
           enemyCard: jsonData.data
         })
+      }
+      if(jsonData.type === 'JOIN-SUCCESS') {
+        console.log(jsonData.room)
       }
     }
     this.state = {
@@ -21,10 +31,11 @@ class App extends Component {
       heart: 5
     }
   }
-  sendMsg = (e)=> {
-    e.preventDefault()
-    this.state.socket.send(this.refs.message.value)
-    this.refs.clear.reset()
+  onJoinGame = () => {
+    const url = querystring.parse(window.location.search.substring(1))
+    const urlName = url && url.room
+    console.log(urlName)
+    this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: url.room}))
   }
   addCard = () => {
     const randomNumber = Math.floor(Math.random() * 10) + 1
@@ -49,6 +60,10 @@ class App extends Component {
   render() {
     return (
       <div className="">
+        <div>
+          <input type="text" placeholder="Name" ref='name'/>
+          <button onClick={ this.onJoinGame }>Go</button>
+        </div>
         <div className='card-columns'>
           {
             this.state.enemyCard.map((c,i) => <EnemyCard key={i}/>)
