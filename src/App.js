@@ -5,6 +5,7 @@ class App extends Component {
     super()
     const socket = new WebSocket(process.env.REACT_APP_SERVER_HOST || 'wss://' + window.location.host)
     socket.onmessage = (message) => {
+      console.log(message.data)
       const jsonData = JSON.parse(message.data)
       if(jsonData.type === "TO-OTHER") {
         this.setState({

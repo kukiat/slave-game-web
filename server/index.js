@@ -14,8 +14,11 @@ wss.on('connection', function connection(ws, req) {
     ws.on('message', function incoming(message) {
       wss.clients.forEach((client) => {
         const jsonData = JSON.parse(message)
-        if(jsonData.type === "TO-OTHER") {
-          client.send(JSON.stringify(jsonData))
+        //send invisible data to enemy
+        if (client != ws) {
+          if(jsonData.type === "TO-OTHER") {
+            client.send(JSON.stringify(jsonData))
+          }
         }
       })
     });
