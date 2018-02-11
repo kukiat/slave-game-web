@@ -1,5 +1,6 @@
 body {
-  background: #222222
+  background: #222222;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .card {
@@ -19,4 +20,28 @@ body {
 
 .card-content{
   
+}
+.btn-joingame{
+  border-color: #000000;
+  margin-left: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 12px 28px;
+}
+.input-join-game{
+  height: 35px;
+  background: #ffffff;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  padding: 5px 15px;
+  box-sizing: border-box;
+  width: 30%;
+}
+.player-name{
+  color: white
+}
+.player-status {
+	border-radius: 50%;
+	width: 50px;
+  height: 50px; 
 }

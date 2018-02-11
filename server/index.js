@@ -14,6 +14,7 @@ const names = Moniker.generator([Moniker.adjective, Moniker.noun, Moniker.verb])
 const m = new Map()
 
 wss.send = function send(socket, data) {
+  console.log(socket.readyState)
   if (socket.readyState === WebSocket.OPEN) {
     socket.send(data);
   }
@@ -30,7 +31,10 @@ wss.on('connection',  (ws, req) => {
     return ws.terminate()
   }
   ws.isAlive = true;
-  ws.on('pong', () => this.isAlive = true)
+  ws.on('pong', () => {
+    console.log('eiei')
+    this.isAlive = true
+  })
   try {
     ws.on('message',  (message) => {
       let jsonData = JSON.parse(message)
@@ -62,7 +66,6 @@ wss.on('connection',  (ws, req) => {
       })
     });
     ws.on('error', msg => console.error(msg))
-    ws.on('close', msg => console.error(msg))
   }catch(e) {
     console.log('err',e)
   }

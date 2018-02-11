@@ -10,40 +10,32 @@ class Room {
 
   joinGame(ws) {
     //create new player
-    const playerIndex = this.players.findIndex((p) => p.name === ws.name )
-    const existPlayer = this.players[playerIndex];
-    if(!existPlayer) {
+    if(this.players.length === 0) {
       ws.id = this.players.length + 1
       ws.score = 500
-      ws.status = true
       this.players.push(ws)
+      this.wss.send(ws, JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name }))
     }else {
       ws.id = this.players.length + 1
       ws.score = 500
-      ws.status = true
       this.players.push(ws)
     }
-    this.players.map(p=>{
-      console.log(p.name+ p.isAlive)
-    })
-    this.wss.send(ws, JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name }))
     this.updatePlayer()
-    console.log('room ->', this.roomId,' player ->', this.players.length)
-
+    ws.on('close', msg => {
+      this.updatePlayer()
+      console.error(msg)
+    })
     // this.wss.send(JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name}))
   }
   updatePlayer() {
     const player = this.players.map((p)=>({
       name: p.name,
       score: p.score,
-      status: p.status,
+      status: p.readyState,
       id: p.id
     }))
-    // console.log(player)
-    this.players.forEach((p) => {
-      
-      this.wss.send(p, JSON.stringify({ type:'PREPARE', data: player }))
-    })
+    console.log('room -> ', this.roomId,' player ->' , this.players.length)
+    this.players.map((p) => this.wss.send(p, JSON.stringify({ type:'PREPARE', data: player })))
   }
 }
 

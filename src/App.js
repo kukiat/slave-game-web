@@ -9,8 +9,8 @@ class App extends Component {
     const urlName = url && url.room
     socket.onopen = function() {
       if(urlName) {
-        // console.log('have room', urlName)
-        // this.onJoinGame(urlName)
+        //this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: urlName}))
+        console.log('opennnn')
       }
     }.bind(this)
     socket.onmessage = (message) => {
@@ -24,17 +24,23 @@ class App extends Component {
       if(jsonData.type === 'CREATED-ROOM') {
         window.history.replaceState('', '', `?room=${jsonData.room}`)
       }
+      if(jsonData.type === 'PREPARE') {
+        this.setState({
+          players: jsonData.data
+        })
+      }
     }
     this.state = {
       socket,
       text: [],
       myCard: [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1],
       enemyCard:[1,1],
-      heart: 5
+      heart: 5,
+      players:[]
     }
   }
 
-  onJoinGame = (x) => {
+  onJoinGame = () => {
     const url = querystring.parse(window.location.search.substring(1))
     const urlName = url && url.room
     if(urlName){
@@ -66,30 +72,35 @@ class App extends Component {
   }
 
   render() {
+    const json = querystring.parse(window.location.search.substring(1));
+    const urlInvite = `${window.location.host}/?room=${json.room}`
+    const { players } = this.state
     return (
       <div className="">
-        <div>
-          <input type="text" placeholder="Name" ref='name'/>
-          <button onClick={ this.onJoinGame }>Go</button>
-        </div>
-        <div className='card-columns'>
-          {
-            this.state.enemyCard.map((c,i) => <EnemyCard key={i}/>)
-          }  
-        </div>
-        <hr/>
-        <h1>
-          {this.state.heart}
-        </h1>
-        <div className='card-columns'>
-          {
-            this.state.myCard.map((c, i) => 
-              <Card key={i} number={c}/>
-            )
-          }
-        </div>
-        <button onClick={ this.addCard }>จั่วการ์ด</button>
-        <button onClick={ this.sendCard }>ดวล</button>
+        {
+          players.length === 0 ?
+            <div className=''>
+              <h1>21 Game</h1>
+              <input type="text" className='input-join-game' placeholder="Name" ref='name'/>
+              <button className='btn-joingame' onClick={ this.onJoinGame }><span>Join Game</span></button>
+            </div>
+            :
+            <div>
+              <a href={urlInvite} target="_blank"><h3>{urlInvite}</h3></a>
+              {
+                players.map((p) =>
+                  <div className='card-columns'>
+                    <div className='player-status' style = {p.status === 1? {background: 'green'}: {background: 'red'}}></div>
+                    <h1 className='player-name'>{p.name}</h1>
+                    <EnemyCard />
+                    <EnemyCard />  
+                  </div>
+                )
+              }
+              {/* <button onClick={ this.addCard }>จั่วการ์ด</button>
+              <button onClick={ this.sendCard }>ดวล</button> */}
+            </div>  
+        }
       </div>
     );
   }
