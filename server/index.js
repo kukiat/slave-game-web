@@ -4,29 +4,33 @@ const url = require('url')
 const WebSocket = require('ws')
 const uuidv1 = require('uuid/v1');
 const app = express()
-
+const Room = require('./room.js')
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 const Moniker = require('moniker');
 const names = Moniker.generator([Moniker.adjective, Moniker.noun, Moniker.verb]);
 
+const m = new Map()
 wss.on('connection', function connection(ws, req) {
   const location = url.parse(req.url, true);
   try {
     ws.on('message', function incoming(message) {
       const jsonData = JSON.parse(message)
       if(jsonData.type === "JOIN-ROOM") {
-        console.log('room', jsonData.room) 
-        if(jsonData.room) {
-          console.log('create new room')
-          ws.name = jsonData.name
-          ws.send(JSON.stringify({
-            type: 'JOIN-SUCCESS', 
-            room: names.choose(),
-            name: ws.name
-          }))
+        let haveRoom = jsonData.room && m.get(jsonData.room)
+        if(haveRoom){
+          //join room
+        }else{
+          //new room cause no gameId
         }
+      }else if(jsonData.type === 'CREATE-ROOM') {
+        const roomId =  names.choose()
+        console.log('create room', roomId)
+        //create new room
+        m.set(roomId, new Room(wss, roomId))
+        m.get(roomId).joinGame(ws)
+        ws.send(JSON.stringify({ type:'CREATED-ROOM', room: roomId, name: jsonData.name }))
       }
       wss.clients.forEach((client) => {
         //send invisible data to enemy
@@ -35,7 +39,6 @@ wss.on('connection', function connection(ws, req) {
             client.send(JSON.stringify(jsonData))
           }
         }
-        // join game
       })
     });
     ws.on('error', msg => console.error(msg))

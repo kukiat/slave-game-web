@@ -9,7 +9,8 @@ class App extends Component {
     const urlName = url && url.room
     socket.onopen = function() {
       if(urlName) {
-        this.onJoinGame()
+        // console.log('have room', urlName)
+        // this.onJoinGame(urlName)
       }
     }.bind(this)
     socket.onmessage = (message) => {
@@ -19,8 +20,8 @@ class App extends Component {
           enemyCard: jsonData.data
         })
       }
-      if(jsonData.type === 'JOIN-SUCCESS') {
-        console.log(jsonData.room)
+      if(jsonData.type === 'CREATED-ROOM') {
+        window.history.replaceState('', '', `?room=${jsonData.room}`)
       }
     }
     this.state = {
@@ -31,12 +32,18 @@ class App extends Component {
       heart: 5
     }
   }
-  onJoinGame = () => {
+
+  onJoinGame = (x) => {
     const url = querystring.parse(window.location.search.substring(1))
     const urlName = url && url.room
-    console.log(urlName)
-    this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: url.room}))
+    if(urlName){
+      this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: urlName}))
+    }else{
+      console.log('create')
+      this.state.socket.send(JSON.stringify({type:'CREATE-ROOM', name: this.refs.name.value}))
+    }
   }
+
   addCard = () => {
     const randomNumber = Math.floor(Math.random() * 10) + 1
     const allNumner = this.state.myCard.reduce((prev,curr) => prev + curr)
