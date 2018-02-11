@@ -73,7 +73,7 @@ class App extends Component {
 
   render() {
     const json = querystring.parse(window.location.search.substring(1));
-    const urlInvite = `${window.location.host}/?room=${json.room}`
+    const urlInvite = `?room=${json.room}`
     const { players } = this.state
     return (
       <div className="">
@@ -86,7 +86,7 @@ class App extends Component {
             </div>
             :
             <div>
-              <a href={urlInvite} target="_blank"><h3>{urlInvite}</h3></a>
+              <h3>Invite friend </h3><a href={urlInvite} target="_blank"><h3>{window.location.host}{urlInvite}</h3></a>
               {
                 players.map((p) =>
                   <div className='card-columns'>
