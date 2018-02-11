@@ -15,6 +15,7 @@ class App extends Component {
     }.bind(this)
     socket.onmessage = (message) => {
       const jsonData = JSON.parse(message.data)
+      console.log(jsonData)
       if(jsonData.type === "TO-OTHER") {
         this.setState({
           enemyCard: jsonData.data

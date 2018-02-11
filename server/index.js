@@ -12,26 +12,46 @@ const Moniker = require('moniker');
 const names = Moniker.generator([Moniker.adjective, Moniker.noun, Moniker.verb]);
 
 const m = new Map()
-wss.on('connection', function connection(ws, req) {
-  const location = url.parse(req.url, true);
+
+wss.send = function send(socket, data) {
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(data);
+  }
+};
+
+wss.broadcast =  (data) => {
+  wss.clients.forEach(function each(client) {
+    client.send(data)
+  })
+}
+
+wss.on('connection',  (ws, req) => {
+  if (ws.isAlive === false) {
+    return ws.terminate()
+  }
+  ws.isAlive = true;
+  ws.on('pong', () => this.isAlive = true)
   try {
-    ws.on('message', function incoming(message) {
-      const jsonData = JSON.parse(message)
+    ws.on('message',  (message) => {
+      let jsonData = JSON.parse(message)
       if(jsonData.type === "JOIN-ROOM") {
         let haveRoom = jsonData.room && m.get(jsonData.room)
         if(haveRoom){
+          let roomId =  jsonData.room
+          ws.name = jsonData.name
           //join room
+          m.get(roomId).joinGame(ws)
         }else{
           //new room cause no gameId
         }
       }else if(jsonData.type === 'CREATE-ROOM') {
-        const roomId =  names.choose()
-        console.log('create room', roomId)
+        let roomId =  names.choose()
+        ws.name = jsonData.name
         //create new room
         m.set(roomId, new Room(wss, roomId))
         m.get(roomId).joinGame(ws)
-        ws.send(JSON.stringify({ type:'CREATED-ROOM', room: roomId, name: jsonData.name }))
       }
+
       wss.clients.forEach((client) => {
         //send invisible data to enemy
         if (client != ws) {
