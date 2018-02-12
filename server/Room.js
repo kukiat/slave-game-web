@@ -10,22 +10,28 @@ class Room {
 
   joinGame(ws) {
     //create new player
-    if(this.players.length === 0) {
+    const indexPlayer  = this.players.findIndex((p) => p.name === ws.name)
+    const player = this.players[indexPlayer]
+    
+    if(!player) {
       ws.id = this.players.length + 1
       ws.score = 500
       this.players.push(ws)
       this.wss.send(ws, JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name }))
-    }else {
-      ws.id = this.players.length + 1
-      ws.score = 500
-      this.players.push(ws)
+      this.updatePlayer()
+    }else if(player && player.readyState !== WebSocket.OPEN){
+      ws.name = player.name
+      ws.id = player.id
+      ws.score = player.score
+      this.players[indexPlayer] = ws
+      this.updatePlayer()
+    }else if(player && player.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type:'ALREADY-PLAYER'}))
     }
-    this.updatePlayer()
+    
     ws.on('close', msg => {
       this.updatePlayer()
-      console.error(msg)
     })
-    // this.wss.send(JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name}))
   }
   updatePlayer() {
     const player = this.players.map((p)=>({
@@ -34,7 +40,7 @@ class Room {
       status: p.readyState,
       id: p.id
     }))
-    console.log('room -> ', this.roomId,' player ->' , this.players.length)
+    console.log('room -> ', this.roomId,' player ->' , player)
     this.players.map((p) => this.wss.send(p, JSON.stringify({ type:'PREPARE', data: player })))
   }
 }

@@ -13,40 +13,22 @@ const names = Moniker.generator([Moniker.adjective, Moniker.noun, Moniker.verb])
 
 const m = new Map()
 
-wss.send = function send(socket, data) {
-  console.log(socket.readyState)
-  if (socket.readyState === WebSocket.OPEN) {
-    socket.send(data);
-  }
-};
-
-wss.broadcast =  (data) => {
-  wss.clients.forEach(function each(client) {
-    client.send(data)
-  })
-}
-
 wss.on('connection',  (ws, req) => {
-  if (ws.isAlive === false) {
-    return ws.terminate()
-  }
-  ws.isAlive = true;
-  ws.on('pong', () => {
-    console.log('eiei')
-    this.isAlive = true
-  })
+  if (ws.isAlive === false) return ws.terminate()
+  ws.isAlive = true
+  ws.on('pong', () => this.isAlive = true)
   try {
     ws.on('message',  (message) => {
       let jsonData = JSON.parse(message)
       if(jsonData.type === "JOIN-ROOM") {
         let haveRoom = jsonData.room && m.get(jsonData.room)
+        let roomId =  jsonData.room
+        ws.name = jsonData.name
         if(haveRoom){
-          let roomId =  jsonData.room
-          ws.name = jsonData.name
-          //join room
           m.get(roomId).joinGame(ws)
         }else{
-          //new room cause no gameId
+          m.set(roomId, new Room(wss, roomId))
+          m.get(roomId).joinGame(ws)
         }
       }else if(jsonData.type === 'CREATE-ROOM') {
         let roomId =  names.choose()
@@ -56,20 +38,19 @@ wss.on('connection',  (ws, req) => {
         m.get(roomId).joinGame(ws)
       }
 
-      wss.clients.forEach((client) => {
-        //send invisible data to enemy
-        if (client != ws) {
-          if(jsonData.type === "TO-OTHER") {
-            client.send(JSON.stringify(jsonData))
-          }
-        }
-      })
     });
     ws.on('error', msg => console.error(msg))
   }catch(e) {
-    console.log('err',e)
+    console.log('err ',e)
   }
 });
+
+wss.send = (socket, data) => {
+  //send data when client ready
+  if (socket.readyState === WebSocket.OPEN) {
+    socket.send(data);
+  }
+}
 
 server.listen(3001, function listening() {
   console.log('Listening on %d', server.address().port);

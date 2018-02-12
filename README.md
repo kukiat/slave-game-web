@@ -1,1 +1,1 @@
-Just noob game.
+Just game in free time.

@@ -29,6 +29,9 @@ class App extends Component {
           players: jsonData.data
         })
       }
+      if(jsonData.type === 'ALREADY-PLAYER') {
+        this.setState({ alreadyMember: true})
+      }
     }
     this.state = {
       socket,
@@ -36,7 +39,8 @@ class App extends Component {
       myCard: [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1],
       enemyCard:[1,1],
       heart: 5,
-      players:[]
+      players:[],
+      alreadyMember: false
     }
   }
 
@@ -46,7 +50,6 @@ class App extends Component {
     if(urlName){
       this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: urlName}))
     }else{
-      console.log('create')
       this.state.socket.send(JSON.stringify({type:'CREATE-ROOM', name: this.refs.name.value}))
     }
   }
@@ -74,15 +77,26 @@ class App extends Component {
   render() {
     const json = querystring.parse(window.location.search.substring(1));
     const urlInvite = `?room=${json.room}`
-    const { players } = this.state
+    const { players, alreadyMember } = this.state
     return (
-      <div className="">
+      <div className="container bg">
         {
           players.length === 0 ?
-            <div className=''>
+            <div className='container'>
               <h1>21 Game</h1>
-              <input type="text" className='input-join-game' placeholder="Name" ref='name'/>
-              <button className='btn-joingame' onClick={ this.onJoinGame }><span>Join Game</span></button>
+              <div class="field">
+                <div class="control">
+                  <input 
+                    className={alreadyMember ? 'input is-danger' : 'input'} 
+                    type="text" 
+                    placeholder="Name" 
+                    ref='name' 
+                    style={{width:'50%'}}
+                  />
+                  { alreadyMember ? <p className="help is-danger"> Already this member</p>: null }
+                </div>
+                <a class="button is-outlined" onClick={ this.onJoinGame }>Play</a>
+              </div>
             </div>
             :
             <div>
@@ -97,8 +111,6 @@ class App extends Component {
                   </div>
                 )
               }
-              {/* <button onClick={ this.addCard }>จั่วการ์ด</button>
-              <button onClick={ this.sendCard }>ดวล</button> */}
             </div>  
         }
       </div>
@@ -117,7 +129,7 @@ function Card({ number }) {
 function EnemyCard() {
   return (
     <div className='card'>
-      <h1 className='card-content'>X</h1>
+      <h1 className='card-content'></h1>
     </div>
   )
 }
