@@ -53,8 +53,10 @@ class Room {
       id: p.id,
       cards: p.cards
     }))
-    console.log('room -> ', this.roomId,' player ->' , player)
-    this.players.map((p) => this.wss.send(p, JSON.stringify({ type:'PREPARE', data: player })))
+    const data = Object.assign({ type:'PREPARE', data: player }, {roomId: this.roomId})
+    console.log('room -> ', this.roomId,' player ->' , data)
+
+    this.players.map((p) => this.wss.send(p, JSON.stringify(data)))
   }
 }
 

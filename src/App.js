@@ -23,10 +23,12 @@ class App extends Component {
       }
       if(jsonData.type === 'CREATED-ROOM') {
         window.history.replaceState('', '', `?room=${jsonData.room}`)
+        
       }
       if(jsonData.type === 'PREPARE') {
         this.setState({
-          players: jsonData.data
+          players: jsonData.data,
+          roomId: jsonData.roomId
         })
       }
       if(jsonData.type === 'ALREADY-PLAYER') {
@@ -36,7 +38,7 @@ class App extends Component {
     this.state = {
       socket,
       text: [],
-      myCard: [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1],
+      roomId: '',
       enemyCard:[1,1],
       heart: 5,
       players:[],
@@ -59,7 +61,8 @@ class App extends Component {
   }
 
   addCard = () => {
-    
+    const { name, roomId } = this.state
+    console.log(name, roomId)
   }
 
   sendCard = () => {
