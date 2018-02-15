@@ -15,14 +15,14 @@ class Room {
     if(this.players.length === 0){
       ws.id = this.players.length + 1
       ws.score = 500
-      ws.cards = this.createRandomCard()
+      ws.cards = this.initialCard()
       this.players.push(ws)
       this.wss.send(ws, JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name }))
       this.updatePlayer()
     }else if(!player) {
       ws.id = this.players.length + 1
       ws.score = 500
-      ws.cards = this.createRandomCard()
+      ws.cards = this.initialCard()
       this.players.push(ws)
       this.updatePlayer()
     }else if(player && player.readyState !== WebSocket.OPEN){
@@ -41,8 +41,15 @@ class Room {
     })
   }
 
-  createRandomCard() {
-    return [Math.floor(Math.random() * 10) + 1, Math.floor(Math.random() * 10) + 1] 
+  addNewCard(name) {
+    const newCard = Math.floor(Math.random() * 5) + 1
+    const player = this.players.find((p) => p.name === name) 
+    player.cards.push(newCard)
+    this.updatePlayer()
+  }
+
+  initialCard() {
+    return [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1] 
   }
 
   updatePlayer() {
@@ -52,11 +59,14 @@ class Room {
       status: p.readyState,
       id: p.id,
       cards: p.cards
-    }))
-    const data = Object.assign({ type:'PREPARE', data: player }, {roomId: this.roomId})
-    console.log('room -> ', this.roomId,' player ->' , data)
-
-    this.players.map((p) => this.wss.send(p, JSON.stringify(data)))
+    }))  
+    console.log('room -> ', this.roomId,' player ->' , player)
+    this.players.map((p) => this.wss.send(p, JSON.stringify({ 
+      type:'PREPARE', 
+      roomId: this.roomId, 
+      data: player })
+    ))
+    
   }
 }
 

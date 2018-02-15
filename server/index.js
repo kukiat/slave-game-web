@@ -38,12 +38,16 @@ wss.on('connection', (ws, req) => {
         m.set(roomId, new Room(wss, roomId))
         m.get(roomId).joinGame(ws)
       }
+      if(jsonData.type === 'ADD_CARD') {
+        const { name, roomId } = jsonData
+        m.get(roomId).addNewCard(name)
+      }
     })
     ws.on('error', msg => console.error(msg))
   }catch(e) {
     console.log('err ',e)
   }
-});
+})
 
 wss.send = (socket, data) => {
   //send data when client ready

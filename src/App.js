@@ -16,11 +16,6 @@ class App extends Component {
     socket.onmessage = (message) => {
       const jsonData = JSON.parse(message.data)
       console.log(jsonData)
-      if(jsonData.type === "TO-OTHER") {
-        this.setState({
-          enemyCard: jsonData.data
-        })
-      }
       if(jsonData.type === 'CREATED-ROOM') {
         window.history.replaceState('', '', `?room=${jsonData.room}`)
         
@@ -39,7 +34,6 @@ class App extends Component {
       socket,
       text: [],
       roomId: '',
-      enemyCard:[1,1],
       heart: 5,
       players:[],
       alreadyMember: false,
@@ -62,7 +56,10 @@ class App extends Component {
 
   addCard = () => {
     const { name, roomId } = this.state
-    console.log(name, roomId)
+    this.state.socket.send(JSON.stringify({
+      type: 'ADD_CARD',
+      name, roomId
+    }))
   }
 
   sendCard = () => {
