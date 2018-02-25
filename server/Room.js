@@ -12,23 +12,30 @@ class Room {
     //create new player
     const indexPlayer  = this.players.findIndex((p) => p.name === ws.name)
     const player = this.players[indexPlayer]
+    console.log(this.players)
     if(this.players.length === 0){
       ws.id = this.players.length + 1
       ws.score = 500
       ws.cards = this.initialCard()
+      ws.position = 'head'
+      ws.ready = false
       this.players.push(ws)
       this.wss.send(ws, JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name }))
       this.updatePlayer()
     }else if(!player) {
       ws.id = this.players.length + 1
       ws.score = 500
+      ws.position = 'normal'
+      ws.ready = false
       ws.cards = this.initialCard()
       this.players.push(ws)
       this.updatePlayer()
     }else if(player && player.readyState !== WebSocket.OPEN){
       ws.name = player.name
       ws.id = player.id
+      ws.position = player.position
       ws.score = player.score
+      ws.ready = player.ready
       ws.cards = player.cards
       this.players[indexPlayer] = ws
       this.updatePlayer()
@@ -37,12 +44,13 @@ class Room {
     }
     
     ws.on('close', msg => {
-      this.updatePlayer()
+      console.log(msg)
+      // this.updatePlayer()/
     })
   }
 
   addNewCard(name) {
-    const newCard = Math.floor(Math.random() * 5) + 1
+    const newCard = Math.floor(Math.random() * 10) + 1
     const player = this.players.find((p) => p.name === name) 
     player.cards.push(newCard)
     this.updatePlayer()
@@ -52,12 +60,19 @@ class Room {
     return [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1] 
   }
 
+  changeReady(ready, name) {
+    const player = this.players.find((p)=>p.name === name)
+    player.ready = ready
+    this.updatePlayer()
+  }
+
   updatePlayer() {
     const player = this.players.map((p)=>({
       name: p.name,
-      score: p.score,
+      position: p.position,
       status: p.readyState,
       id: p.id,
+      ready: p.ready,
       cards: p.cards
     }))  
     console.log('room -> ', this.roomId,' player ->' , player)

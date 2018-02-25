@@ -66,6 +66,14 @@ class App extends Component {
 
   }
 
+  onReady = (status) => {
+    this.state.socket.send(JSON.stringify({
+      type: 'PREPARE_ROOM',
+      ready: status,
+      name: this.state.name,
+      roomId: this.state.roomId
+    }))
+  }
   render() {
     const json = querystring.parse(window.location.search.substring(1));
     const urlInvite = `?room=${json.room}`
@@ -92,10 +100,31 @@ class App extends Component {
             </div>
             :
             <div>
-              <button onClick={this.addCard}>add card</button>
-              <button onClick={this.sendCard}>send card</button>
+              {/* <button onClick={this.addCard}>add card</button> */}
+              {/* <button onClick={this.sendCard}>send card</button> */}
               <h3>Invite friend </h3><a href={urlInvite} target="_blank"><h3>{window.location.host}{urlInvite}</h3></a>
-              {
+              <div>
+                {
+                  players.map((p)=>{
+                    return (
+                      <div>
+                        <div>{p.name}</div>
+                        {
+                          p.ready? <div>ready</div>: <div>not ready</div>
+                        }
+                        { name === p.name ? 
+                          p.ready === false ?
+                            <button onClick={ ()=>this.onReady(true) }>ready</button> 
+                            : <button onClick={ ()=>this.onReady(false) }>cancle</button>
+                          : null
+                        }
+                        { p.position === 'head' && name === p.name ? <button>start game</button> : null}
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              {/* {
                 players.map((p) =>
                   <div key ={p.id} className='card-columns'>
                     <div className='player-status' style = {p.status === 1? {background: 'green'}: {background: 'red'}}></div>
@@ -108,7 +137,7 @@ class App extends Component {
                     
                   </div>
                 )
-              }
+              } */}
             </div>  
         }
       </div>

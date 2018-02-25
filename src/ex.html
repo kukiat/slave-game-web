@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+  <script src="main.js"></script>
+</head>
+<body>
+  <div class="main-container">
+      <div class="box-invite">invite</div>
+      <div class="main-game">
+          <div class="main-detail">
+              <div class="box-status">
+                <b>Status</b>
+                <div class="player-status">
+                    <div class="status-circle"></div>
+                    <div>kukiat</div>
+                </div>
+                <div class="player-status">
+                    <div class="status-circle"></div>
+                    <b>kukiat</b>
+                </div>
+              </div>
+              <div class="box-status">
+                  <b>log</b>
+                </div>
+          </div>
+          <div class="main-player">
+    
+              <div class="box-player">
+                  TaeNaJa
+              </div>
+          
+              <div class="box-player">
+                  TaeNaJa
+              </div>
+          
+              <div class="box-player">
+                  TaeNaJa
+              </div>
+          
+          </div>
+            
+      </div>
+  </div>
+  <style>
+    body{
+      background-color: #f5f5f5;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .main-container{
+      color: black;
+      font-size: 20px;
+    }
+    .main-game{
+      display: flex; 
+      flex-direction: row;
+    }
+    .main-detail{
+      flex-direction: column;
+      width: 25%;
+    }
+    .main-player{
+      flex-direction: column;
+      width: 75%;
+    }
+    .main-invite{
+      width: 100%;
+      flex-direction: column;
+    }
+    .box-invite{
+      background: rgb(255,255,255);
+      border-radius: 3px;
+      height: 30px;
+    }
+    .box-player{
+      background: rgb(255,255,255);
+      border-radius: 3px;
+      margin: 10px 10px 10px 10px;
+      height: 170px;
+    }
+    .box-status{
+      background: rgb(255,255,255);
+      margin: 10px 5px 10px 10px;
+      border-radius: 3px;
+      height: 300px;
+    }
+    .box-invite{
+      background: rgb(255,255,255);
+      border-radius: 3px;
+      margin: 10px 5px 10px 10px;
+      height: 30px;
+    }
+    .box-player-detail{
+      font-size: 14px;
+    }
+    .status-circle {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      background: green; 
+    }
+    .player-status{
+      
+    }
+  </style>
+</body>
+</html>

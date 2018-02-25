@@ -38,6 +38,10 @@ wss.on('connection', (ws, req) => {
         m.set(roomId, new Room(wss, roomId))
         m.get(roomId).joinGame(ws)
       }
+      if(jsonData.type === 'PREPARE_ROOM') {
+        let { roomId, name, ready } = jsonData
+        m.get(roomId).changeReady(ready, name)
+      }
       if(jsonData.type === 'ADD_CARD') {
         const { name, roomId } = jsonData
         m.get(roomId).addNewCard(name)
