@@ -74,12 +74,15 @@ class App extends Component {
       roomId: this.state.roomId
     }))
   }
+  startGame = () => {
+    console.log('start')
+  }
   render() {
     const json = querystring.parse(window.location.search.substring(1));
     const urlInvite = `?room=${json.room}`
     const { name, players, alreadyMember } = this.state
     return (
-      <div className="container bg">
+      <div className="">
         {
           players.length === 0 ?
             <div className='container'>
@@ -99,29 +102,37 @@ class App extends Component {
               </div>
             </div>
             :
-            <div>
-              {/* <button onClick={this.addCard}>add card</button> */}
-              {/* <button onClick={this.sendCard}>send card</button> */}
-              <h3>Invite friend </h3><a href={urlInvite} target="_blank"><h3>{window.location.host}{urlInvite}</h3></a>
-              <div>
+            <div className="main-prepare">
+              <div className="invite-player">
+                <b>Invite friend</b>
+                <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
+              </div>
+              
+              <div className="prepare-player-list">
+                
                 {
-                  players.map((p)=>{
+                  players.map((p, i)=>{
                     return (
-                      <div>
-                        <div>{p.name}</div>
-                        {
-                          p.ready? <div>ready</div>: <div>not ready</div>
-                        }
+                      
+                      <div className="prepare-player">
+                        <div style={p.ready? {'color': 'green'}:{'color': 'red'}}>{p.name}</div>
                         { name === p.name ? 
                           p.ready === false ?
-                            <button onClick={ ()=>this.onReady(true) }>ready</button> 
-                            : <button onClick={ ()=>this.onReady(false) }>cancle</button>
+                            <div className="btn-ready" onClick={ ()=>this.onReady(!p.ready) }>READY</div>                      
+                            : <div className="btn-cancle"  onClick={ ()=>this.onReady(!p.ready) }>CANCLE</div>
                           : null
                         }
-                        { p.position === 'head' && name === p.name ? <button>start game</button> : null}
+                        
                       </div>
                     )
                   })
+                }
+                {
+                  players.map((p)=> 
+                    p.position === 'head' && name === p.name? 
+                    <div className="btn-ready-start">START GAME</div>
+                    : null
+                  )
                 }
               </div>
               {/* {

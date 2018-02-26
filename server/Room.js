@@ -46,6 +46,7 @@ class Room {
     ws.on('close', msg => {
       console.log(msg)
       // this.updatePlayer()/
+      this.checkDisconnect()
     })
   }
 
@@ -82,6 +83,12 @@ class Room {
       data: player })
     ))
     
+  }
+
+  checkDisconnect() {
+    this.players.map((p)=> {
+      console.log(p.readyState)
+    })
   }
 }
 
