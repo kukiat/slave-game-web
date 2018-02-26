@@ -85,20 +85,14 @@ class App extends Component {
       <div className="">
         {
           players.length === 0 ?
-            <div className='container'>
-              <h1>21 Game</h1>
-              <div className="field">
-                <div className="control">
-                  <input 
-                    className={alreadyMember ? 'input is-danger' : 'input'} 
-                    type="text" 
-                    placeholder="Name" 
-                    ref='name' 
-                    style={{width:'50%'}}
-                  />
-                  { alreadyMember ? <p className="help is-danger"> Already this member</p>: null }
-                </div>
-                <a className="button is-outlined" onClick={ this.joinGame }>Play</a>
+            <div className='main-login'>
+              <div className="game-title">
+                21 Game
+              </div>
+              <div className="login-form">
+                <input placeholder="Name.." type="input" className="input-form-name" ref='name'/>
+                <div className="join-game-btn"  onClick={ this.joinGame }>JOIN</div>
+                { alreadyMember ? <div className="already-player">Already Player</div>: null }
               </div>
             </div>
             :
@@ -107,9 +101,7 @@ class App extends Component {
                 <b>Invite friend</b>
                 <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
               </div>
-              
               <div className="prepare-player-list">
-                
                 {
                   players.map((p, i)=>{
                     return (
