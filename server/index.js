@@ -46,6 +46,10 @@ wss.on('connection', (ws, req) => {
         const { name, roomId } = jsonData
         m.get(roomId).addNewCard(name)
       }
+      if(jsonData.type === 'START_GAME') {
+        const { roomId, name } = jsonData
+        m.get(roomId).startGame(name)
+      }
     })
     ws.on('error', msg => console.error(msg))
   }catch(e) {

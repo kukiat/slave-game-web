@@ -12,7 +12,6 @@ class Room {
     //create new player
     const indexPlayer  = this.players.findIndex((p) => p.name === ws.name)
     const player = this.players[indexPlayer]
-    console.log(this.players)
     if(this.players.length === 0){
       ws.id = this.players.length + 1
       ws.score = 500
@@ -48,6 +47,15 @@ class Room {
         this.chechExitRoom()
       }
     })
+  }
+
+  startGame(name) {
+    if(this.readyRoom){
+      console.log('xxxx')
+    }else{
+      const player = this.players.find((p)=> p.name === name)
+      player.send(JSON.stringify({ type: 'CANNOT_START_GAME'}))
+    }
   }
 
   addNewCard(name) {

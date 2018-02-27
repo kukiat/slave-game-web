@@ -18,7 +18,6 @@ class App extends Component {
       console.log(jsonData)
       if(jsonData.type === 'CREATED-ROOM') {
         window.history.replaceState('', '', `?room=${jsonData.room}`)
-        
       }
       if(jsonData.type === 'PREPARE') {
         this.setState({
@@ -27,7 +26,11 @@ class App extends Component {
         })
       }
       if(jsonData.type === 'ALREADY-PLAYER') {
+        console.log('xxxxx')
         this.setState({ alreadyMember: true})
+      }
+      if(jsonData.type === 'CANNOT_START_GAME') {
+        this.setState({ startGame: false})
       }
     }
     this.state = {
@@ -37,7 +40,8 @@ class App extends Component {
       heart: 5,
       players:[],
       alreadyMember: false,
-      name: ''
+      name: '',
+      startGame: true
     }
   }
 
@@ -75,7 +79,11 @@ class App extends Component {
     }))
   }
   startGame = () => {
-    console.log('start')
+    this.state.socket.send(JSON.stringify({
+      type: 'START_GAME',
+      roomId: this.state.roomId,
+      name: this.state.name
+    }))
   }
   render() {
     const json = querystring.parse(window.location.search.substring(1));
@@ -92,7 +100,7 @@ class App extends Component {
               <div className="login-form">
                 <input placeholder="Name.." type="input" className="input-form-name" ref='name'/>
                 <div className="join-game-btn"  onClick={ this.joinGame }>JOIN</div>
-                { alreadyMember ? <div className="already-player">Already Player</div>: null }
+                { alreadyMember ? <div className="rejected">Already Player</div>: null }
               </div>
             </div>
             :
@@ -113,17 +121,20 @@ class App extends Component {
                             : <div className="btn-cancle"  onClick={ ()=>this.onReady(!p.ready) }>CANCLE</div>
                           : null
                         }
-                        
                       </div>
                     )
                   })
                 }
-                {
-                  players.map((p)=> 
-                    p.position === 'head' && name === p.name? 
-                    <div className="btn-ready-start">START GAME</div>
-                    : null
-                  )
+                { players.map((p) => {
+                    return (
+                      p.position === 'head' && name === p.name ?
+                        <div>
+                          <div className="btn-ready-start" onClick={ this.startGame } >START GAME</div>
+                          { !this.state.startGame &&  <div className="rejected">All player not yet ready</div> }
+                        </div>
+                      : null
+                    )
+                  })
                 }
               </div>
               {/* {
