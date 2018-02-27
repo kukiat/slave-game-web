@@ -44,8 +44,9 @@ class Room {
     }
     
     ws.on('close', msg => {
-      // this.updatePlayer()/
-      this.chechExitRoom()
+      if(this.readyRoom === false) {
+        this.chechExitRoom()
+      }
     })
   }
 
@@ -85,13 +86,11 @@ class Room {
   }
 
   chechExitRoom() {
-    if(this.readyRoom === false) {
-      this.players.map((p, i) => {
-        if(p.readyState !== 1) {
-          this.players.splice(i, i+1)
-        }
-      })
-    }
+    this.players.map((p, i) => {
+      if(p.readyState !== WebSocket.OPEN) {
+        this.players.splice(i, 1)
+      }
+    })
     this.updatePlayer()
   }
 }

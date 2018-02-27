@@ -68,7 +68,7 @@ class App extends Component {
 
   onReady = (status) => {
     this.state.socket.send(JSON.stringify({
-      type: 'PREPARE_ROOM',
+      type: 'READY_ROOM',
       ready: status,
       name: this.state.name,
       roomId: this.state.roomId
