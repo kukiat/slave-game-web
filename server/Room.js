@@ -5,7 +5,7 @@ class Room {
     this.wss = wss
     this.roomId = roomId
     this.players = []
-
+    this.readyRoom = false
   }
 
   joinGame(ws) {
@@ -44,9 +44,8 @@ class Room {
     }
     
     ws.on('close', msg => {
-      console.log(msg)
       // this.updatePlayer()/
-      this.checkDisconnect()
+      this.chechExitRoom()
     })
   }
 
@@ -85,10 +84,15 @@ class Room {
     
   }
 
-  checkDisconnect() {
-    this.players.map((p)=> {
-      console.log(p.readyState)
-    })
+  chechExitRoom() {
+    if(this.readyRoom === false) {
+      this.players.map((p, i) => {
+        if(p.readyState !== 1) {
+          this.players.splice(i, i+1)
+        }
+      })
+    }
+    this.updatePlayer()
   }
 }
 

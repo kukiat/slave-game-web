@@ -34,6 +34,9 @@ body{
   text-indent:  1ex;
   border: 1px solid #ddd;
 }
+.btn-ready-start:hover ,.join-game-btn:hover{
+  background: rgb(90, 179, 79);
+}
 .already-player{
   font-size: 20px;
   margin-top: 10px;

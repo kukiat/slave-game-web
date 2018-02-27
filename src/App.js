@@ -105,8 +105,7 @@ class App extends Component {
                 {
                   players.map((p, i)=>{
                     return (
-                      
-                      <div className="prepare-player">
+                      <div className="prepare-player" key={ p.id }>
                         <div style={p.ready? {'color': 'green'}:{'color': 'red'}}>{p.name}</div>
                         { name === p.name ? 
                           p.ready === false ?
