@@ -50,9 +50,16 @@ class Room {
   }
 
   startGame(name) {
+    this.readyRoom = this.players.reduce((p, c) => {
+      if(c.ready) 
+        return p+1
+      return p
+    }, 0) === this.players.length 
+    
     if(this.readyRoom){
-      console.log('xxxx')
+      console.log('start')
     }else{
+      console.log('cannot start')
       const player = this.players.find((p)=> p.name === name)
       player.send(JSON.stringify({ type: 'CANNOT_START_GAME'}))
     }
