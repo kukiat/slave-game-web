@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>test</title>
+  <style>
+    body{
+      letter-spacing: .02em;
+      background: rgb(22, 22, 22);
+      /* background: rgb(55, 55, 55); */
+      font: 1rem "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+      color: papayawhip;
+    }
+    .main-room{
+      margin-top: 80px;
+      display: grid;
+      grid-gap: 4px;
+      grid-template-columns: 70% 30%;
+      grid-template-rows: repeat(10, 70px)
+    }
+    .grid-tpm{
+      background: rgb(22, 22, 22);
+      border: 1px solid rgb(214, 209, 209);
+      border-radius: 14px;
+      color: white;
+      padding: 7px 0px 0px 7px;
+    }
+    .room-player{
+      grid-row: 1/3;
+      grid-gap: 7px;
+      display: grid;
+      padding: 4px;
+    }
+    .status-player{
+      grid-row: 1/4;
+      padding: 8px 0px 0px 0px;
+    }
+    .enemy-player{
+      padding: 4px;      
+      grid-row: 3/10;
+      /* display: grid; */
+      /* grid-gap: 4px; */
+      overflow-x: scroll;
+    }
+    .monitor-player{
+      grid-row: 4/10;
+      display: grid;
+      grid-template-rows: 10% 80% 10%;
+      padding: 8px 0px 0px 0px;
+    }
+    .player{
+      font-size: 22px;
+      color: black;
+      border-radius: 10px;
+      /* box-shadow: 0 0.1vh 3vh rgba(0, 0, 0, 0.1); */
+      background: rgba(255, 255, 255, 0.9) linear-gradient(to top,rgba(240, 235, 235, 0.966),rgba(228, 218, 218, 0.904));
+      padding: 7px 0px 0px 7px;   
+    }
+    .detail-title{
+      display: grid;
+      grid-gap: 10px;
+    }
+    .add-card{
+      background: rgb(72, 173, 58);
+      width: 13%;
+      height: 25px;
+      padding: 3px;
+      border-radius: 5px;
+      padding: 5px 1px 0px 0px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 18px;
+      color: rgb(236, 236, 232);
+    }
+    .detail-title-name{
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .with-enemy{
+      margin: 0px 0px 5px 0px;
+      height: 132px;
+    }
+    .room-name-title{
+      background: rgb(255, 255, 255);
+      margin-bottom: 10px;
+      color: black;
+      font-size: 30px;
+      padding: 10px 0px 0px 15px;
+      font-weight: bold;
+      position: absolute;
+      height: 50px;
+      top: 10px;
+      right: 0;
+      left: 0;
+    }
+    .status-circle{
+      border-radius: 50%;
+      background: green;
+      height: 33px;
+      width: 33px;
+    }
+    .status-player-title{
+      color: #83d0f2; 
+      font-size: 24px;
+      font-weight: bold;
+      padding: 0px 0px 5px 10px;
+    }
+    .chat-title{
+      color: #83d0f2; 
+      font-size: 24px;
+      font-weight: bold;
+      padding: 3px 0px 0px 10px;
+    }
+    .bd-btm{
+      border-bottom: solid 1px rgb(214, 209, 209);
+    }
+    .status-name{
+      font-size: 24px;
+      margin-left: 10px;
+    }
+    .status-player-scroll{
+      overflow-x: scroll;
+      height: 165px;
+    }
+    .status-player-detail{
+      display: flex;
+      margin: 7px 0px 6px 10px;
+      /* padding: 0px 0px 0px 10px;  */
+    }
+    .chat-detail{
+      padding: 0px 10px 100px 10px;
+      height: 242px;
+      overflow-x: scroll;
+    }
+    .chat-info{
+      margin-top:5px;
+      font-size: 18px;
+    }
+    .chat-form{
+      display: flex;
+      
+    }
+    .chat-btn{
+      flex-grow: 1;
+      background: rgb(91, 13, 122);
+      border-radius: 0px 0px 13px 0px;
+      padding: 13px;
+      font-size: 16px;
+      cursor: pointer;
+      border-top: solid 1px rgb(214, 209, 209);
+    }
+    .chat-btn:hover{
+      background: rgb(105, 26, 141);
+    }
+    .chat-input{
+      flex-grow: 25;
+      height:42px;
+      font-size: 18px;
+      border: solid 1px rgb(214, 209, 209);
+      border-radius: 0px 0px 0px 13px;
+      padding: 0px 0px 0px 10px;
+      background: rgb(55, 55, 55);
+      color:rgb(255, 255, 255);
+    }
+  </style>
+</head>
+<body>
+  <div class="room-name-title">Room Name : xxxxxx</div>
+  <div class="main-room">
+      <div class="grid-tpm room-player">
+          <div class="player">
+            <div class="detail-title">
+                <div class="detail-title-name">Kukiat</div>
+                <div class="add-card">Add Card</div>
+                <div class="add-card">Send Card</div>
+            </div>
+            <div class="detail-card">
+
+            </div>
+          </div>
+      </div>
+      <div class="grid-tpm status-player">
+        <div class="status-player-title bd-btm">Player Status</div>
+        <div class="status-player-scroll">
+          <div class="status-player-detail">
+            <div class="status-circle"></div>
+            <div class="status-name">xxxx</div>
+          </div>
+          <div class="status-player-detail">
+              <div class="status-circle"></div>
+              <div class="status-name">xxxx</div>
+            </div>
+          <div class="status-player-detail">
+            <div class="status-circle"></div>
+            <div class="status-name">xxxx</div>
+          </div>
+          <div class="status-player-detail">
+            <div class="status-circle"></div>
+            <div class="status-name">xxxx</div>
+          </div>
+          <div class="status-player-detail">
+              <div class="status-circle"></div>
+              <div class="status-name">xxxx</div>
+            </div>
+          <div class="status-player-detail">
+            <div class="status-circle"></div>
+            <div class="status-name">xxxx</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid-tpm enemy-player">
+          <div class="player with-enemy">
+            <div class="detail-title-name">Ta</div>
+            <div class="detail-title-name">500</div>
+          </div>
+          <div class="player with-enemy">
+            <div class="detail-title-name">Ta</div>
+            <div class="detail-title-name">500</div>
+          </div>
+          <div class="player with-enemy">
+            <div class="detail-title-name">Ta</div>
+            <div class="detail-title-name">500</div>
+          </div>
+          <div class="player with-enemy">
+            <div class="detail-title-name">Ta</div>
+            <div class="detail-title-name">500</div>
+          </div>
+      </div>
+      <div class="grid-tpm monitor-player">
+        <div class="chat-title bd-btm">Chat</div>
+        <div class="chat-detail">
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <div class="chat-info">12:30:31 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has reconnected</div>
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <div class="chat-info">Kukiat : prom yang wa</div>
+          <div class="chat-info">Kukiat : WTF why u so serius</div>
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <!-- <div class="chat-info">12:30:31 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has reconnected</div>
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <div class="chat-info">Kukiat : prom yang wa</div>
+          <div class="chat-info">Kukiat : WTF why u so serius</div>
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <div class="chat-info">12:30:31 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has reconnected</div>
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <div class="chat-info">Kukiat : prom yang wa</div>
+          <div class="chat-info">Kukiat : WTF why u so serius</div>
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <div class="chat-info">12:30:31 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has joined</div>
+          <div class="chat-info">12:30:30 : xxxxxx has reconnected</div>
+          <div class="chat-info">12:30:30 : xxxxxx has disconnected</div>
+          <div class="chat-info">Kukiat : prom yang wa</div>
+          <div class="chat-info">Kukiat : WTF why u so serius</div> -->
+        </div>
+        <div class="chat-form">
+          <input class="chat-input bd-top" placeholder="Send a message" type="text"/>
+          <div class="chat-btn">Chat</div>
+        </div>
+      </div>
+  </div>
+  
+</body>
+</html>

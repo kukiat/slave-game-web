@@ -107,7 +107,9 @@ class App extends Component {
             <div className="main-prepare">
               <div className="invite-player">
                 <b>Invite friend</b>
-                <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
+                <div className="invite-url">
+                  <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
+                </div>
               </div>
               <div className="prepare-player-list">
                 {

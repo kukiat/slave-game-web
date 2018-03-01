@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>prepare</title>
+  <style>
+    body{
+      background: rgb(22 , 22, 22);
+      font: 1rem "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+    }
+    .main-prepare{
+      display: grid; 
+      grid-gap: 25px;
+    }
+    .invite-player{
+      text-align: center;
+      background: #FFFFFF;
+      padding: 5px;
+      font-size: 30px;
+      color: rgb(55, 55, 55);
+    }
+    .qwop{
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-gap :10px;
+      padding: 10px 15px 0px 15px;
+      grid-template-rows: minmax(130, auto);
+    }
+    .prepare-player-list{
+      border-radius: 9px;
+      border: solid 1px rgb(236, 236, 232);
+      grid-row-start: 1;
+    }
+    .all-room{
+      border-radius: 5px;
+      border: solid 1px rgb(236, 236, 232);
+      grid-row: 1/10;
+    }
+    .prepare-player{
+      font-size: 20px;
+      margin: 5px 5px 0px 5px;
+      padding: 5px;
+      background: rgb(236, 236, 232);
+      border-radius: 5px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+    }
+    .btn-ready{
+      border-radius: 8px;
+      color: white;
+      width: 90px;
+      padding: 2px;
+      font-size: 20px;
+      cursor: pointer;
+      text-align: center;
+      background: rgb(209, 14, 14);
+    }
+    .btn-cancle{
+      border-radius: 8px;
+      color: white;
+      width: 90px;
+      font-size: 20px;
+      padding: 2px;
+      cursor: pointer;
+      text-align: center;
+      background: rgb(72, 173, 58);
+    }
+    .btn-ready-start{
+      border-radius: 5px;
+      color: white;
+      height: 27px;
+      cursor: pointer;
+      text-align: center;
+      background: rgb(72, 173, 58);
+      padding-top: 10px;
+    }
+    .room-info:hover{
+      background: rgb(216, 216, 206);
+    }
+    .room-info{
+      cursor: pointer;
+      background: rgb(236, 236, 232);
+      border-radius: 5px;
+      font-size: 20px;
+      padding: 5px 5px 5px 5px;
+      margin-top: 5px;
+      display: grid;
+      grid-template-columns: 80% 20%;
+    }
+    .pd-btn{
+      margin: 5px 5px 5px 5px;
+    }
+    .all-room-title{
+      font-size: 26px;
+      font-weight: bold;
+      color:#83d0f2;
+      padding: 10px 10px 10px 10px;
+      border-bottom: 1px solid  rgb(236, 236, 232);
+    }
+    .room-list{
+      padding: 0px 5px 0px 5px;
+      overflow-x: scroll;
+      height: 600px;
+    }
+    .btn-other-room{
+      border-radius: 5px;
+      color: white;
+      height: 27px;
+      cursor: pointer;
+      text-align: center;
+      background: rgb(199, 111, 28);
+      padding-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-prepare">
+    <div class="invite-player">
+      <b>Invite friend</b>
+      <a href="">wwww.gooogogogoogoooogogogo.com</a>
+    </div>
+
+    <div class="qwop">
+      
+      <div class="prepare-player-list">
+        <div class="all-room-title">
+          Room : wdasdawdawd-awdawd-awdawd
+        </div>
+        <div class="prepare-player-detail">
+            <div class="prepare-player">
+                Lorem, ipsum.
+                <div class="btn-ready">READY</div>
+              </div>
+              
+              <div class="prepare-player">
+                Lorem
+                <div class="btn-ready">READY</div>
+              </div>
+              <div class="prepare-player">
+                Lorem
+                <div class="btn-ready">READY</div>
+              </div>
+              <div class="prepare-player">
+                Lorem
+                <div class="btn-ready">READY</div>
+              </div>
+              <div class="prepare-player">
+                Lorem
+                <div class="btn-ready">READY</div>
+              </div>
+              <div class="btn-ready-start pd-btn">START GAME</div>
+              <div class="btn-other-room pd-btn">OTHER ROOM</div>
+        </div>
+      </div>
+      
+      <div class="all-room">
+        <div class="all-room-title">
+          Other Room
+        </div>
+        <div class="room-list">
+          <div class="room-info">
+            room1
+            <div class="join-other-room btn-cancle"> Join</div>
+          </div>
+          <div class="room-info">
+            room1
+            <div class="join-other-room btn-cancle"> Join</div>
+          </div>
+          <div class="room-info">
+            room1
+            <div class="join-other-room btn-cancle"> Join</div>
+          </div>
+          <div class="room-info">
+            room1
+            <div class="join-other-room btn-cancle"> Join</div>
+           </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</body>
+</html>

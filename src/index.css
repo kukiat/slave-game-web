@@ -1,8 +1,7 @@
 body{
-
-  background: rgb(55, 55, 55);
-  /* background: rgb(255, 255, 255); */
+  background: rgb(22, 22, 22);
   font: 1rem "Source Sans Pro", "Segoe UI", "Helvetica Neue", sans-serif;
+  color: papayawhip;
 }
 .main-login{
   margin-top:40px;
@@ -11,6 +10,12 @@ body{
   text-align: center;
   grid-gap: 30px;
   color:papayawhip;
+}
+.game-title{
+  font-size: 80px;
+  font-weight: 500;
+  text-shadow: 2px 2px rgb(164, 226, 20);
+  margin-bottom: 40px;
 }
 .login-form{
   display: grid;
@@ -21,10 +26,13 @@ body{
 .join-game-btn{
   border-radius: 0px 30px 30px 0px;
   background: rgb(72, 173, 58);
-  font-size: 15px;
-  
+  font-size: 16px;
   padding-top: 12px;
   cursor: pointer;
+}
+.invite-url{
+  color: #83d0f2; 
+
 }
 .input-form-name{
   border-radius: 30px 0px 0px 30px;
@@ -47,6 +55,7 @@ body{
   grid-gap: 25px;
 }
 .invite-player{
+  display: flex;
   text-align: center;
   background: #FFFFFF;
   padding: 5px;
