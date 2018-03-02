@@ -37,10 +37,8 @@ class App extends Component {
     }
     this.state = {
       socket,
-      text: [],
       roomId: '',
-      heart: 5,
-      players:[],
+      players: [],
       alreadyMember: false,
       name: '',
       startGame: true,
