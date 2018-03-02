@@ -1,4 +1,5 @@
 const WebSocket = require('ws')
+const roomAll = require('./index')
 
 class Room {
   constructor(wss, roomId) {
@@ -20,7 +21,8 @@ class Room {
       ws.ready = false
       this.players.push(ws)
       this.wss.send(ws, JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name }))
-      this.updatePlayer(allRoom)
+      this.updateAllRoom(allRoom)
+      this.updatePlayer()
     }else if(!player) {
       ws.id = this.players.length + 1
       ws.score = 500
@@ -28,7 +30,8 @@ class Room {
       ws.ready = false
       ws.cards = this.initialCard()
       this.players.push(ws)
-      this.updatePlayer(allRoom)
+      this.updateAllRoom(allRoom)
+      this.updatePlayer()
     }else if(player && player.readyState !== WebSocket.OPEN){
       ws.name = player.name
       ws.id = player.id
@@ -37,7 +40,7 @@ class Room {
       ws.ready = player.ready
       ws.cards = player.cards
       this.players[indexPlayer] = ws
-      this.updatePlayer(allRoom)
+      this.updatePlayer()
     }else if(player && player.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type:'ALREADY-PLAYER'}))
     }
@@ -45,6 +48,9 @@ class Room {
     ws.on('close', msg => {
       if(this.readyRoom === false) {
         this.chechExitRoom()
+      }
+      if(this.players.length === 0) {
+        roomAll.destroyRoom(this.roomId)
       }
     })
   }
@@ -91,8 +97,30 @@ class Room {
     this.updatePlayer()
   }
 
-  updatePlayer(allRoom) {
-    const player = this.players.map((p)=>({
+  updatePlayer() {  
+    const player = this.getPlayers(this.players)
+    console.log('room -> ', this.roomId,' player ->' , player)
+    this.players.map((p) => this.wss.send(p, JSON.stringify({ 
+      type:'PREPARE', 
+      roomId: this.roomId, 
+      data: player
+     })))
+  }
+  
+  updateAllRoom(allRoom) {
+    const allRoomData = []
+    allRoom.forEach((e) => {
+      allRoomData.push({
+        roomId: e.roomId,
+        players: this.getPlayers(e.players),
+        readyRoom: e.readyRoom
+      })
+    })
+    this.wss.broadcast(JSON.stringify({type: 'ALL_ROOM', data: allRoomData}))
+  }
+
+  getPlayers(players) {
+    return players.map((p)=>({
       name: p.name,
       position: p.position,
       status: p.readyState,
@@ -100,18 +128,8 @@ class Room {
       ready: p.ready,
       cards: p.cards
     }))  
-    console.log(allRoomData)
-    console.log('room -> ', this.roomId,' player ->' , player)
-    this.players.map((p) => this.wss.send(p, JSON.stringify({ 
-      type:'PREPARE', 
-      roomId: this.roomId, 
-      data: player
-     })))
-    
   }
-  getAllRoom(m) {
-    console.log(m.size)
-  }
+
   chechExitRoom() {
     this.players.map((p, i) => {
       if(p.readyState !== WebSocket.OPEN) {

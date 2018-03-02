@@ -25,8 +25,10 @@ class App extends Component {
           roomId: jsonData.roomId
         })
       }
+      if(jsonData.type === 'ALL_ROOM') {
+        this.setState({allRoom: jsonData.data})
+      }
       if(jsonData.type === 'ALREADY-PLAYER') {
-        console.log('xxxxx')
         this.setState({ alreadyMember: true})
       }
       if(jsonData.type === 'CANNOT_START_GAME') {
@@ -41,7 +43,8 @@ class App extends Component {
       players:[],
       alreadyMember: false,
       name: '',
-      startGame: true
+      startGame: true,
+      allRoom:[]
     }
   }
 
@@ -88,9 +91,9 @@ class App extends Component {
   render() {
     const json = querystring.parse(window.location.search.substring(1));
     const urlInvite = `?room=${json.room}`
-    const { name, players, alreadyMember } = this.state
+    const { name, players, alreadyMember, allRoom} = this.state
     return (
-      <div className="">
+      <div className="huhoh">
         {
           players.length === 0 ?
             <div className='main-login'>
@@ -149,39 +152,17 @@ class App extends Component {
                     Other Room
                   </div>
                   <div className="room-list">
-                    <div className="room-info">
-                      room1
-                      <div className="join-other-room btn-cancle"> Join</div>
-                    </div>
-                    <div className="room-info">
-                      room1
-                      <div className="join-other-room btn-cancle"> Join</div>
-                    </div>
-                    <div className="room-info">
-                      room1
-                      <div className="join-other-room btn-cancle"> Join</div>
-                    </div>
-                    <div className="room-info">
-                      room1
-                      <div className="join-other-room btn-cancle"> Join</div>
-                    </div>
+                    {
+                      allRoom.map((room) => (
+                        <div className="room-info">
+                          {room.roomId}
+                          <div className="join-other-room btn-cancle"> Join</div>
+                        </div>
+                      ))
+                    }
                   </div>
                 </div>
               </div>
-              {/* {
-                players.map((p) =>
-                  <div key ={p.id} className='card-columns'>
-                    <div className='player-status' style = {p.status === 1? {background: 'green'}: {background: 'red'}}></div>
-                    <h1 className='player-name'>{p.name}</h1>
-                    { 
-                      p.name === name ?
-                      p.cards.map((n, i)=> <Card key={i} number={n}/>)
-                      : p.cards.map((n, i)=> <EnemyCard key={i} />)
-                    }
-                    
-                  </div>
-                )
-              } */}
             </div>  
         }
       </div>

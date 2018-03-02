@@ -51,15 +51,15 @@ wss.on('connection', (ws, req) => {
         m.get(roomId).startGame(name)
       }
     })
-    ws.on('error', msg => console.error(msg))
+    ws.on('error', (msg) => console.error(msg))
   }catch(e) {
     console.log('err ',e)
   }
 })
 
-function getAllRoom() {
-  console.log(m.size)
-}
+exports.destroyRoom = function(roomId) {
+  m.delete(roomId)
+};
 
 wss.send = (socket, data) => {
   //send data when client ready
@@ -67,6 +67,14 @@ wss.send = (socket, data) => {
     socket.send(data);
   }
 }
+
+wss.broadcast = (data) => {
+  wss.clients.forEach((client) => {
+    if(client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
 
 server.listen(3001, () => {
   console.log('Listening on %d', server.address().port);
