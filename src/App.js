@@ -16,10 +16,10 @@ class App extends Component {
     socket.onmessage = (message) => {
       const jsonData = JSON.parse(message.data)
       console.log(jsonData)
-      if(jsonData.type === 'CREATED-ROOM') {
+      if(jsonData.type === 'CREATED_ROOM') {
         window.history.replaceState('', '', `?room=${jsonData.room}`)
       }
-      if(jsonData.type === 'PREPARE') {
+      if(jsonData.type === 'PLAYER_PREPARE') {
         this.setState({
           players: jsonData.data,
           roomId: jsonData.roomId
@@ -52,7 +52,7 @@ class App extends Component {
     if(urlName){
       this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: urlName}))
     }else{
-      this.state.socket.send(JSON.stringify({type:'CREATE-ROOM', name: this.refs.name.value}))
+      this.state.socket.send(JSON.stringify({type:'CREATE_ROOM', name: this.refs.name.value}))
     }
     this.setState({
       name: this.refs.name.value

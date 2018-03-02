@@ -26,17 +26,17 @@ wss.on('connection', (ws, req) => {
         let roomId =  jsonData.room
         ws.name = jsonData.name
         if(haveRoom) {
-          m.get(roomId).joinGame(ws, m)
+          m.get(roomId).joinGame(ws)
         }else {
           m.set(roomId, new Room(wss, roomId))
-          m.get(roomId).joinGame(ws, m)
+          m.get(roomId).joinGame(ws)
         }
-      }else if(jsonData.type === 'CREATE-ROOM') {
+      }else if(jsonData.type === 'CREATE_ROOM') {
         let roomId =  names.choose()
         ws.name = jsonData.name
         //create new room
         m.set(roomId, new Room(wss, roomId))
-        m.get(roomId).joinGame(ws, m)
+        m.get(roomId).joinGame(ws)
       }
       if(jsonData.type === 'READY_ROOM') {
         let { roomId, name, ready } = jsonData
@@ -61,14 +61,38 @@ exports.destroyRoom = function(roomId) {
   m.delete(roomId)
 };
 
+exports.updateAllRoom = function() {
+  const allRoomData = []
+  m.forEach((e) => {
+    allRoomData.push({
+      roomId: e.roomId,
+      players: getPlayers(e.players),
+      readyRoom: e.readyRoom
+    })
+  })
+  wss.broadcast(JSON.stringify({type: 'ALL_ROOM', data: allRoomData}))
+}
+
+function getPlayers(players) {
+  return players.map((p)=>({
+    name: p.name,
+    position: p.position,
+    status: p.readyState,
+    id: p.id,
+    ready: p.ready,
+    cards: p.cards
+  }))  
+}
+
 wss.send = (socket, data) => {
-  //send data when client ready
+  //send data to 1 client
   if (socket.readyState === WebSocket.OPEN) {
     socket.send(data);
   }
 }
 
 wss.broadcast = (data) => {
+  //send data to all
   wss.clients.forEach((client) => {
     if(client.readyState === WebSocket.OPEN) {
       client.send(data);
@@ -79,3 +103,5 @@ wss.broadcast = (data) => {
 server.listen(3001, () => {
   console.log('Listening on %d', server.address().port);
 });
+
+module.exports = {}
