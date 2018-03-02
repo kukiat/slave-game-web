@@ -8,7 +8,7 @@ class Room {
     this.readyRoom = false
   }
 
-  joinGame(ws) {
+  joinGame(ws, allRoom) {
     //create new player
     const indexPlayer  = this.players.findIndex((p) => p.name === ws.name)
     const player = this.players[indexPlayer]
@@ -20,7 +20,7 @@ class Room {
       ws.ready = false
       this.players.push(ws)
       this.wss.send(ws, JSON.stringify({ type:'CREATED-ROOM', room: this.roomId, name: ws.name }))
-      this.updatePlayer()
+      this.updatePlayer(allRoom)
     }else if(!player) {
       ws.id = this.players.length + 1
       ws.score = 500
@@ -28,7 +28,7 @@ class Room {
       ws.ready = false
       ws.cards = this.initialCard()
       this.players.push(ws)
-      this.updatePlayer()
+      this.updatePlayer(allRoom)
     }else if(player && player.readyState !== WebSocket.OPEN){
       ws.name = player.name
       ws.id = player.id
@@ -37,7 +37,7 @@ class Room {
       ws.ready = player.ready
       ws.cards = player.cards
       this.players[indexPlayer] = ws
-      this.updatePlayer()
+      this.updatePlayer(allRoom)
     }else if(player && player.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type:'ALREADY-PLAYER'}))
     }
@@ -50,18 +50,27 @@ class Room {
   }
 
   startGame(name) {
-    this.readyRoom = this.players.reduce((p, c) => {
-      if(c.ready) 
-        return p+1
-      return p
-    }, 0) === this.players.length 
-    
+    const typeName = this.checkPlayer()
     if(this.readyRoom){
       console.log('start')
     }else{
       console.log('cannot start')
       const player = this.players.find((p)=> p.name === name)
-      player.send(JSON.stringify({ type: 'CANNOT_START_GAME'}))
+      player.send(JSON.stringify({ type: typeName}))
+    }
+  }
+  
+  checkPlayer() {
+    if(this.players.length < 2) {
+      this.readyRoom = false
+      return 'PLAYER_LESSTHAN_2'
+    }else{
+      this.readyRoom = this.players.reduce((p, c) => {
+        if(c.ready) 
+          return p+1
+        return p
+      }, 0) === this.players.length 
+      return 'NOT_READY'
     }
   }
 
@@ -82,7 +91,7 @@ class Room {
     this.updatePlayer()
   }
 
-  updatePlayer() {
+  updatePlayer(allRoom) {
     const player = this.players.map((p)=>({
       name: p.name,
       position: p.position,
@@ -91,15 +100,18 @@ class Room {
       ready: p.ready,
       cards: p.cards
     }))  
+    console.log(allRoomData)
     console.log('room -> ', this.roomId,' player ->' , player)
     this.players.map((p) => this.wss.send(p, JSON.stringify({ 
       type:'PREPARE', 
       roomId: this.roomId, 
-      data: player })
-    ))
+      data: player
+     })))
     
   }
-
+  getAllRoom(m) {
+    console.log(m.size)
+  }
   chechExitRoom() {
     this.players.map((p, i) => {
       if(p.readyState !== WebSocket.OPEN) {

@@ -26,17 +26,17 @@ wss.on('connection', (ws, req) => {
         let roomId =  jsonData.room
         ws.name = jsonData.name
         if(haveRoom) {
-          m.get(roomId).joinGame(ws)
+          m.get(roomId).joinGame(ws, m)
         }else {
           m.set(roomId, new Room(wss, roomId))
-          m.get(roomId).joinGame(ws)
+          m.get(roomId).joinGame(ws, m)
         }
       }else if(jsonData.type === 'CREATE-ROOM') {
         let roomId =  names.choose()
         ws.name = jsonData.name
         //create new room
         m.set(roomId, new Room(wss, roomId))
-        m.get(roomId).joinGame(ws)
+        m.get(roomId).joinGame(ws, m)
       }
       if(jsonData.type === 'READY_ROOM') {
         let { roomId, name, ready } = jsonData
@@ -56,6 +56,10 @@ wss.on('connection', (ws, req) => {
     console.log('err ',e)
   }
 })
+
+function getAllRoom() {
+  console.log(m.size)
+}
 
 wss.send = (socket, data) => {
   //send data when client ready

@@ -111,33 +111,62 @@ class App extends Component {
                   <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
                 </div>
               </div>
-              <div className="prepare-player-list">
-                {
-                  players.map((p, i)=>{
-                    return (
-                      <div className="prepare-player" key={ p.id }>
-                        <div style={p.ready? {'color': 'green'}:{'color': 'red'}}>{p.name}</div>
-                        { name === p.name ? 
-                          p.ready === false ?
-                            <div className="btn-ready" onClick={ ()=>this.onReady(!p.ready) }>READY</div>                      
-                            : <div className="btn-cancle"  onClick={ ()=>this.onReady(!p.ready) }>CANCLE</div>
+              <div className="qwop">
+                <div className="prepare-player-list">
+                  <div className="all-room-title">Room : wdasdawdawd-awdawd-awdawd</div>
+                  <div className="prepare-player-detail">
+                    {
+                      players.map((p, i)=>{
+                        return (
+                          <div className="prepare-player" key={ p.id }>
+                            <div style={p.ready? {'color': 'green'}:{'color': 'red'}}>{p.name}</div>
+                            { name === p.name ? 
+                              p.ready === false ?
+                                <div className="btn-ready" onClick={ ()=>this.onReady(!p.ready) }>READY</div>                      
+                                : <div className="btn-cancle"  onClick={ ()=>this.onReady(!p.ready) }>CANCLE</div>
+                              : null
+                            }
+                          </div>
+                        )
+                      })
+                    }
+                    { players.map((p) => {
+                        return (
+                          p.position === 'head' && name === p.name ?
+                            <div key={p.id}>
+                              <div className="btn-ready-start pd-btn" onClick={ this.startGame } >START GAME</div>
+                              { !this.state.startGame &&  <div className="rejected">All player not yet ready</div> }
+                            </div>
                           : null
-                        }
-                      </div>
-                    )
-                  })
-                }
-                { players.map((p) => {
-                    return (
-                      p.position === 'head' && name === p.name ?
-                        <div>
-                          <div className="btn-ready-start" onClick={ this.startGame } >START GAME</div>
-                          { !this.state.startGame &&  <div className="rejected">All player not yet ready</div> }
-                        </div>
-                      : null
-                    )
-                  })
-                }
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+
+                <div className="all-room">
+                  <div className="all-room-title">
+                    Other Room
+                  </div>
+                  <div className="room-list">
+                    <div className="room-info">
+                      room1
+                      <div className="join-other-room btn-cancle"> Join</div>
+                    </div>
+                    <div className="room-info">
+                      room1
+                      <div className="join-other-room btn-cancle"> Join</div>
+                    </div>
+                    <div className="room-info">
+                      room1
+                      <div className="join-other-room btn-cancle"> Join</div>
+                    </div>
+                    <div className="room-info">
+                      room1
+                      <div className="join-other-room btn-cancle"> Join</div>
+                    </div>
+                  </div>
+                </div>
               </div>
               {/* {
                 players.map((p) =>

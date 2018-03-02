@@ -50,31 +50,42 @@ body{
   margin-top: 10px;
   color:red;
 }
+
+
 .main-prepare{
   display: grid; 
   grid-gap: 25px;
 }
 .invite-player{
-  display: flex;
   text-align: center;
   background: #FFFFFF;
   padding: 5px;
   font-size: 30px;
   color: rgb(55, 55, 55);
 }
-.prepare-player-list{
+.qwop{
   display: grid;
-  width: 30%;
+  grid-template-columns: 50% 50%;
+  grid-gap :10px;
+  padding: 10px 15px 0px 15px;
+  grid-template-rows: minmax(130, auto);
+}
+.prepare-player-list{
+  border-radius: 9px;
+  border: solid 1px rgb(236, 236, 232);
+  grid-row-start: 1;
+}
+.all-room{
   border-radius: 5px;
-  margin: auto;
-  grid-gap: 6px;
+  border: solid 1px rgb(236, 236, 232);
+  grid-row: 1/10;
 }
 .prepare-player{
   font-size: 20px;
-  align-self: center;
+  margin: 5px 5px 0px 5px;
   padding: 5px;
   background: rgb(236, 236, 232);
-  border-radius: 6px;
+  border-radius: 5px;
   display: grid;
   grid-template-columns: 2fr 1fr;
 }
@@ -86,8 +97,7 @@ body{
   font-size: 20px;
   cursor: pointer;
   text-align: center;
-  background: red;
-
+  background: rgb(209, 14, 14);
 }
 .btn-cancle{
   border-radius: 8px;
@@ -102,10 +112,47 @@ body{
 .btn-ready-start{
   border-radius: 5px;
   color: white;
-  width: 28em;
   height: 27px;
-  padding-top: 10px;
   cursor: pointer;
   text-align: center;
   background: rgb(72, 173, 58);
+  padding-top: 10px;
+}
+.room-info:hover{
+  background: rgb(216, 216, 206);
+}
+.room-info{
+  cursor: pointer;
+  background: rgb(236, 236, 232);
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px 5px 5px 5px;
+  margin-top: 5px;
+  display: grid;
+  color: rgb(22,22,22);
+  grid-template-columns: 80% 20%;
+}
+.pd-btn{
+  margin: 5px 5px 5px 5px;
+}
+.all-room-title{
+  font-size: 26px;
+  font-weight: bold;
+  color:#83d0f2;
+  padding: 10px 10px 10px 10px;
+  border-bottom: 1px solid  rgb(236, 236, 232);
+}
+.room-list{
+  padding: 0px 5px 0px 5px;
+  overflow-x: scroll;
+  height: 600px;
+}
+.btn-other-room{
+  border-radius: 5px;
+  color: white;
+  height: 27px;
+  cursor: pointer;
+  text-align: center;
+  background: rgb(199, 111, 28);
+  padding-top: 10px;
 }
