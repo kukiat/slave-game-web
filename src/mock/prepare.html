@@ -73,9 +73,57 @@
       background: rgb(72, 173, 58);
       padding-top: 10px;
     }
-    .room-info:hover{
+    /* .room-info:hover{
       background: rgb(216, 216, 206);
+    } */
+
+
+
+
+    .room-info:hover > .detail-info-room{
+      display: block;
+      margin: 43px 0px 10px 0px;
     }
+    .detail-info-room{
+      display: none;   
+      position: absolute;
+      border-radius: 4px;
+      border: 1px solid rgb(202, 191, 191);
+      /* border-top: 13px solid transparent; */
+    }
+    /* .title-room-hold{
+      display: grid;
+      grid-auto-rows: minmax(20px, auto);
+      
+      border-radius: 3px;
+      width: 200px;
+      background: rgb(212, 193, 193);
+      border: 1px solid rgb(190, 163, 163);
+    } */
+    .title-room-hold {
+      display: grid;
+      grid-auto-rows: minmax(20px, auto);
+      position: relative;
+      width: 200px;
+      background: rgb(212, 193, 193);;
+      border-radius: 3px;
+      padding: 3px 0px 0px 3px;
+    }
+
+    .title-room-hold:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      border: 5px solid transparent;
+      border-bottom-color: rgb(212, 193, 193);
+      border-top: 0;
+      border-left: 10;
+      margin-left: -0px;
+      margin-top: -5px;
+    }
+
+
     .room-info{
       cursor: pointer;
       background: rgb(236, 236, 232);
@@ -158,11 +206,26 @@
         </div>
         <div class="room-list">
           <div class="room-info">
-            room1
+            <div class="room-name">
+              room1
+            </div>
+            <div class="detail-info-room grid-info">
+                <div class="title-room-hold">
+                    <div>Players</div>
+                    <div>Players1</div>
+                </div>
+              </div>
             <div class="join-other-room btn-cancle"> Join</div>
           </div>
           <div class="room-info">
-            room1
+            <div class="room-name">room1</div>
+            <div class="detail-info-room">
+              <div class="title-room-hold">
+                  <div>Players</div>
+                  <div>Players2</div>
+                  <div>Players3</div>
+              </div>
+            </div>
             <div class="join-other-room btn-cancle"> Join</div>
           </div>
           <div class="room-info">

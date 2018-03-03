@@ -116,10 +116,8 @@ class App extends Component {
                 <div className="prepare-player-list">
                   <div className="all-room-title">Room : wdasdawdawd-awdawd-awdawd</div>
                   <div className="prepare-player-detail">
-                    {
-                      players.map((p, i)=>{
-                        return (
-                          <div className="prepare-player" key={ p.id }>
+                    { players.map((p, i) => (
+                          <div  key={ p.id } className="prepare-player">
                             <div style={p.ready? {'color': 'green'}:{'color': 'red'}}>{p.name}</div>
                             { name === p.name ? 
                               p.ready === false ?
@@ -129,19 +127,16 @@ class App extends Component {
                             }
                           </div>
                         )
-                      })
-                    }
-                    { players.map((p) => {
-                        return (
-                          p.position === 'head' && name === p.name ?
-                            <div key={p.id}>
-                              <div className="btn-ready-start pd-btn" onClick={ this.startGame } >START GAME</div>
-                              { !this.state.startGame &&  <div className="rejected">All player not yet ready</div> }
-                            </div>
-                          : null
-                        )
-                      })
-                    }
+                      )}
+                    { players.map((p) => (
+                        p.position === 'head' && name === p.name ?
+                          <div key={p.id}>
+                            <div className="btn-ready-start pd-btn" onClick={ this.startGame } >START GAME</div>
+                            { !this.state.startGame &&  <div className="rejected">All player not yet ready</div> }
+                          </div>
+                        : null
+                      )
+                    )}
                   </div>
                 </div>
 
@@ -151,10 +146,21 @@ class App extends Component {
                   </div>
                   <div className="room-list">
                     {
-                      allRoom.map((room) => (
-                        <div className="room-info">
-                          {room.roomId}
-                          <div className="join-other-room btn-cancle"> Join</div>
+                      allRoom.map((room, i) => (
+                        <div key={i} className="room-info">
+                          <div className="room-name">
+                          { room.roomId }
+                          </div>
+                          <div className="detail-info-room grid-info">
+                            <div className="title-room-hold">
+                              {
+                                room.players.map((p) => (
+                                  <div key={ p.id } className="other-room-name">{p.name}</div>
+                                ))
+                              }
+                            </div>
+                          </div>
+                          { room.readyRoom ? null : <div className="join-other-room btn-cancle"> Join</div> }
                         </div>
                       ))
                     }

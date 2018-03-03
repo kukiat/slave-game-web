@@ -42,8 +42,8 @@ body{
   text-indent:  1ex;
   border: 1px solid #ddd;
 }
-.btn-ready-start:hover ,.join-game-btn:hover{
-  background: rgb(90, 179, 79);
+.btn-ready-start:hover, .join-game-btn:hover, .join-other-room:hover{
+  background: rgb(101, 194, 89);
 }
 .rejected{
   font-size: 20px;
@@ -118,8 +118,16 @@ body{
   background: rgb(72, 173, 58);
   padding-top: 10px;
 }
-.room-info:hover{
-  background: rgb(216, 216, 206);
+.room-info:hover > .detail-info-room{
+  display: block;
+  margin: 43px 0px 10px 0px;
+}
+.detail-info-room{
+  display: none;   
+  position: absolute;
+  border-radius: 4px;
+  border: 1px solid rgb(202, 191, 191);
+  /* border-top: 13px solid transparent; */
 }
 .room-info{
   cursor: pointer;
@@ -131,6 +139,31 @@ body{
   display: grid;
   color: rgb(22,22,22);
   grid-template-columns: 80% 20%;
+}
+.title-room-hold {
+  display: grid;
+  grid-auto-rows: minmax(20px, auto);
+  position: relative;
+  width: 200px;
+  background: rgb(212, 193, 193);;
+  border-radius: 3px;
+  padding: 5px 0px 5px 10px;
+}
+
+.title-room-hold:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  border: 5px solid transparent;
+  border-bottom-color: rgb(212, 193, 193);
+  border-top: 0;
+  border-left: 10;
+  margin-left: -0px;
+  margin-top: -5px;
+}
+.other-room-name{
+  font-size: 18px;
 }
 .pd-btn{
   margin: 5px 5px 5px 5px;
