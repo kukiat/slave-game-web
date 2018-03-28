@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import querystring from 'querystring'
+import Main from './component/Main';
 
 class App extends Component {
   constructor(props) {
@@ -46,17 +47,15 @@ class App extends Component {
     }
   }
 
-  joinGame = () => {
+  joinGame = (name) => {
     const url = querystring.parse(window.location.search.substring(1))
     const urlName = url && url.room
     if(urlName){
-      this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: urlName}))
+      this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name, room: urlName}))
     }else{
-      this.state.socket.send(JSON.stringify({type:'CREATE_ROOM', name: this.refs.name.value}))
+      this.state.socket.send(JSON.stringify({type:'CREATE_ROOM', name}))
     }
-    this.setState({
-      name: this.refs.name.value
-    })
+    this.setState({ name: name })
   }
 
   addCard = () => {
@@ -94,16 +93,10 @@ class App extends Component {
       <div className="huhoh">
         {
           players.length === 0 ?
-            <div className='main-login'>
-              <div className="game-title">
-                21 Game
-              </div>
-              <div className="login-form">
-                <input placeholder="Name.." type="input" className="input-form-name" ref='name'/>
-                <div className="join-game-btn"  onClick={ this.joinGame }>JOIN</div>
-                { alreadyMember ? <div className="rejected">Already Player</div>: null }
-              </div>
-            </div>
+            <Main 
+              alreadyMember = {alreadyMember}
+              joinGame = {this.joinGame}
+            />
             :
             <div className="main-prepare">
               <div className="invite-player">
@@ -114,7 +107,7 @@ class App extends Component {
               </div>
               <div className="qwop">
                 <div className="prepare-player-list">
-                  <div className="all-room-title">Room : wdasdawdawd-awdawd-awdawd</div>
+                  <div className="all-room-title">Room : {this.state.roomId}</div>
                   <div className="prepare-player-detail">
                     { players.map((p, i) => (
                           <div  key={ p.id } className="prepare-player">
