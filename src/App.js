@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import querystring from 'querystring'
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     const url = querystring.parse(window.location.search.substring(1))
     const socket = new WebSocket(process.env.REACT_APP_SERVER_HOST || 'wss://' + window.location.host)
     const urlName = url && url.room
