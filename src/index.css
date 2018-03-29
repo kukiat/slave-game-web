@@ -18,7 +18,10 @@ body{
 }
 .invite-url{
   color: #83d0f2; 
-
+}
+.invite-url a {
+  text-decoration: none;
+  color: dodgerblue;
 }
 .btn-ready-start:hover, .join-game-btn:hover, .join-other-room:hover{
   background: rgb(101, 194, 89);
@@ -41,7 +44,7 @@ body{
   font-size: 30px;
   color: rgb(55, 55, 55);
 }
-.qwop{
+.container-room{
   display: grid;
   grid-template-columns: 50% 50%;
   grid-gap :10px;

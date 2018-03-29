@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import querystring from 'querystring'
 import Main from './component/Main';
+import OtherRoom from './component/OtherRoom'
+import PrepareRoom from './component/PrepareRoom'
+import Invite from './component/Invite'
 
 class App extends Component {
   constructor(props) {
@@ -78,87 +81,41 @@ class App extends Component {
       roomId: this.state.roomId
     }))
   }
-  startGame = () => {
+
+  onStartGame = () => {
     this.state.socket.send(JSON.stringify({
       type: 'START_GAME',
       roomId: this.state.roomId,
       name: this.state.name
     }))
   }
+  
   render() {
     const json = querystring.parse(window.location.search.substring(1));
     const urlInvite = `?room=${json.room}`
-    const { name, players, alreadyMember, allRoom} = this.state
+    const { name, players, alreadyMember, allRoom, roomId, startGame} = this.state
     return (
       <div className="huhoh">
-        {
-          players.length === 0 ?
+        { players.length === 0 ?
             <Main 
               alreadyMember = {alreadyMember}
               joinGame = {this.joinGame}
             />
             :
             <div className="main-prepare">
-              <div className="invite-player">
-                <b>Invite friend</b>
-                <div className="invite-url">
-                  <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
-                </div>
-              </div>
-              <div className="qwop">
-                <div className="prepare-player-list">
-                  <div className="all-room-title">Room : {this.state.roomId}</div>
-                  <div className="prepare-player-detail">
-                    { players.map((p, i) => (
-                          <div  key={ p.id } className="prepare-player">
-                            <div style={p.ready? {'color': 'green'}:{'color': 'red'}}>{p.name}</div>
-                            { name === p.name ? 
-                              p.ready === false ?
-                                <div className="btn-ready" onClick={ ()=>this.onReady(!p.ready) }>READY</div>                      
-                                : <div className="btn-cancle"  onClick={ ()=>this.onReady(!p.ready) }>CANCLE</div>
-                              : null
-                            }
-                          </div>
-                        )
-                      )}
-                    { players.map((p) => (
-                        p.position === 'head' && name === p.name ?
-                          <div key={p.id}>
-                            <div className="btn-ready-start pd-btn" onClick={ this.startGame } >START GAME</div>
-                            { !this.state.startGame &&  <div className="rejected">All player not yet ready</div> }
-                          </div>
-                        : null
-                      )
-                    )}
-                  </div>
-                </div>
-
-                <div className="all-room">
-                  <div className="all-room-title">
-                    Other Room
-                  </div>
-                  <div className="room-list">
-                    {
-                      allRoom.map((room, i) => (
-                        <div key={i} className="room-info">
-                          <div className="room-name">
-                          { room.roomId }
-                          </div>
-                          <div className="detail-info-room grid-info">
-                            <div className="title-room-hold">
-                              {
-                                room.players.map((p) => (
-                                  <div key={ p.id } className="other-room-name">{p.name}</div>
-                                ))
-                              }
-                            </div>
-                          </div>
-                          { room.readyRoom ? null : <div className="join-other-room btn-cancle"> Join</div> }
-                        </div>
-                      ))
-                    }
-                  </div>
-                </div>
+              <Invite urlInvite={urlInvite}/>
+              <div className="container-room">
+                <PrepareRoom 
+                  roomId={roomId} 
+                  players={players}
+                  onReady={this.onReady}
+                  onStartGame={this.onStartGame}
+                  startGame={startGame}
+                  name={name}
+                />
+                <OtherRoom 
+                  allRoom={allRoom}
+                />
               </div>
             </div>  
         }
@@ -167,10 +124,10 @@ class App extends Component {
   }
 }
 
-function Card({ number }) {
+function Card(props) {
   return (
     <div className='card'>
-      <h1 className='card-content'>{ number }</h1>
+      <h1 className='card-content'> Test {props.xxxx}</h1>
     </div>
   )
 }

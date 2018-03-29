@@ -46,7 +46,7 @@ const Form = styled.div`
 const InputName = styled.input.attrs({
   type: 'text',
   autoFocus: true,
-  placeHolder: 'Name...'
+  placeholder: 'Name...'
 })`
   border-radius: 30px 0px 0px 30px;
   height: 30px;
