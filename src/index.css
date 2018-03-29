@@ -16,13 +16,7 @@ body{
   padding-top: 12px;
   cursor: pointer;
 }
-.invite-url{
-  color: #83d0f2; 
-}
-.invite-url a {
-  text-decoration: none;
-  color: dodgerblue;
-}
+
 .btn-ready-start:hover, .join-game-btn:hover, .join-other-room:hover{
   background: rgb(101, 194, 89);
 }
@@ -37,13 +31,7 @@ body{
   display: grid; 
   grid-gap: 25px;
 }
-.invite-player{
-  text-align: center;
-  background: #FFFFFF;
-  padding: 5px;
-  font-size: 30px;
-  color: rgb(55, 55, 55);
-}
+
 .container-room{
   display: grid;
   grid-template-columns: 50% 50%;

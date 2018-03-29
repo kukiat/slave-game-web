@@ -2,7 +2,6 @@ import React from 'react'
 
 const PrepareRoom = (props) => {
   const { players, onReady, roomId, onStartGame, startGame, name } = props
-  console.log('startGame',startGame)
   return (
     <div className="prepare-player-list">
       <div className="all-room-title">Room : {roomId}</div>
