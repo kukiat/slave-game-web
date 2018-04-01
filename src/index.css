@@ -20,9 +20,9 @@ body{
 .btn-ready-start:hover, .join-game-btn:hover, .join-other-room:hover{
   background: rgb(101, 194, 89);
 }
-.rejected{
-  font-size: 20px;
-  margin-top: 10px;
+.rejected {
+  font-size: 18px;
+  margin: 5px 0 0 10px;
   color:red;
 }
 

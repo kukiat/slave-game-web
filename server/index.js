@@ -4,8 +4,8 @@ const url = require('url')
 const WebSocket = require('ws')
 
 const uuidv1 = require('uuid/v1');
-const app = express()
 const Room = require('./room.js')
+const app = express()
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
@@ -101,7 +101,5 @@ wss.broadcast = (data) => {
 };
 
 server.listen(3001, () => {
-  console.log('Listening on %d', server.address().port);
-});
-
-module.exports = {}
+  console.log(`server start port ${server.address().port}`);
+})

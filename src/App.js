@@ -35,8 +35,11 @@ class App extends Component {
       if(jsonData.type === 'ALREADY-PLAYER') {
         this.setState({ alreadyMember: true})
       }
-      if(jsonData.type === 'CANNOT_START_GAME') {
-        this.setState({ startGame: false})
+      if(jsonData.type === 'PLAYER_LESSTHAN_2') {
+        this.setState({ startGame: jsonData.type})
+      }
+      if(jsonData.type === 'NOT_READY') {
+        this.setState({ startGame: jsonData.type})
       }
     }
     this.state = {
@@ -45,7 +48,7 @@ class App extends Component {
       players: [],
       alreadyMember: false,
       name: '',
-      startGame: true,
+      startGame: 'WAITING',
       allRoom:[]
     }
   }

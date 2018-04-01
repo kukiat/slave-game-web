@@ -12,7 +12,7 @@ const PrepareRoom = (props) => {
                 { name === p.name ? 
                   p.ready === false ?
                     <div className="btn-ready" onClick={() => onReady(!p.ready)}>READY</div>                      
-                    : <div className="btn-cancle"  onClick={() => onReady(!p.ready)}>CANCLE</div>
+                    : <div className="btn-cancle" onClick={() => onReady(!p.ready)}>CANCLE</div>
                   : null
                 }
               </div>
@@ -22,7 +22,8 @@ const PrepareRoom = (props) => {
           p.position === 'head' && name === p.name &&
             <div key={p.id}>
               <div className="btn-ready-start pd-btn" onClick={ onStartGame } >START GAME</div>
-              { !startGame &&  <div className="rejected">All player not yet ready</div> }
+              { startGame === 'PLAYER_LESSTHAN_2' &&  <div className="rejected">Player must have than 2</div> }
+              { startGame === 'NOT_READY' &&  <div className="rejected">All player not yet ready</div> }
             </div>
           )
         )}
