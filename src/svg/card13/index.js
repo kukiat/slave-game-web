@@ -2,24 +2,24 @@ import React from 'react'
 
 export const Card49 = props => {
   return (
-    <div></div>
+    <img src={require('./king-clubs.svg')} className="card-style"/>
   )
 }
 
-export const Card50 = props => {
+export const Card50= props => {
   return (
-    <div></div>
+    <img src={require('./king-daimond.svg')} className="card-style"/>
   )
 }
 
 export const Card51 = props => {
   return (
-    <div></div>
+    <img src={require('./king-heart.svg')} className="card-style"/>
   )
 }
 
 export const Card52 = props => {
   return (
-    <div></div>
+    <img src={require('./king-spades.svg')} className="card-style"/>
   )
 }
