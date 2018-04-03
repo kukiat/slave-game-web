@@ -2,13 +2,13 @@ import React from 'react'
 
 const OtherRoom = (props) => {
   return (
-    <div className="all-room">
+    <div className="other-room-container">
       <div className="all-room-title">
         Other Room
       </div>
       <div className="room-list">
         { props.allRoom.map((room, i) => (
-            <OtherRoomItem 
+            <RoomItem 
               key={i}
               room={room}
             />
@@ -19,7 +19,7 @@ const OtherRoom = (props) => {
   )
 }
 
-const OtherRoomItem = (props) => {
+const RoomItem = (props) => {
   const { room } = props
   return (
     <div className="room-info">
@@ -27,18 +27,12 @@ const OtherRoomItem = (props) => {
       <div className="detail-info-room grid-info">
         <div className="title-room-hold">
           {room.players.map((p) => (
-            <OtherRoomRoster key={ p.id } name={p.name}/>
+            <div key={ p.id } className="other-room-name">{p.name}</div>
           ))}
         </div>
       </div>
       { !room.readyRoom && <div className="join-other-room btn-cancle"> Join</div> }
     </div>
-  )
-}
-
-const OtherRoomRoster = (props) => {
-  return (
-    <div className="other-room-name">{props.name}</div>
   )
 }
 

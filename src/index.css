@@ -17,8 +17,9 @@ body{
   cursor: pointer;
 }
 
-.btn-ready-start:hover, .join-game-btn:hover, .join-other-room:hover{
+.btn-ready-start:hover, .join-game-btn:hover, .btn-cancle:hover{
   background: rgb(101, 194, 89);
+  transition: 0.2s;
 }
 .rejected {
   font-size: 18px;
@@ -39,19 +40,19 @@ body{
   padding: 10px 15px 0px 15px;
   grid-template-rows: minmax(130, auto);
 }
-.prepare-player-list{
-  border-radius: 9px;
+.prepare-room-container{
+  border-radius: 5px;
   border: solid 1px rgb(236, 236, 232);
   grid-row-start: 1;
 }
-.all-room{
+.other-room-container{
   border-radius: 5px;
   border: solid 1px rgb(236, 236, 232);
   grid-row: 1/10;
 }
 .prepare-player{
   font-size: 20px;
-  margin: 5px 5px 0px 5px;
+  margin: 5px 5px 5px 5px;
   padding: 5px;
   background: rgb(236, 236, 232);
   border-radius: 5px;
@@ -59,20 +60,22 @@ body{
   grid-template-columns: 2fr 1fr;
 }
 .btn-ready{
+  padding-top: 5px;
   border-radius: 8px;
   color: white;
   width: 90px;
   padding: 2px;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
   text-align: center;
   background: rgb(209, 14, 14);
 }
 .btn-cancle{
+  padding-top: 5px;
   border-radius: 8px;
   color: white;
   width: 90px;
-  font-size: 20px;
+  font-size: 16px;
   padding: 2px;
   cursor: pointer;
   text-align: center;

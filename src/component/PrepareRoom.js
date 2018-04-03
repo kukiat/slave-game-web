@@ -3,7 +3,7 @@ import React from 'react'
 const PrepareRoom = (props) => {
   const { players, onReady, roomId, onStartGame, statusRoom, name } = props
   return (
-    <div className="prepare-player-list">
+    <div className="prepare-room-container">
       <div className="all-room-title">Room : {roomId}</div>
       <div className="prepare-player-detail">
         { players.map((p, i) => (
