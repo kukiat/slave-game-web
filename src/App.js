@@ -5,6 +5,25 @@ import OtherRoom from './component/OtherRoom'
 import PrepareRoom from './component/PrepareRoom'
 import Invite from './component/Invite'
 import Game from './component/Game'
+import { Card17, Card8, Card11,Card38, Card36, Card20, Card26, Card22, Card18, Card39,Card19, Card40, Card12, Card35, Card31, Card7, Card10,Card27, Card28, Card32, Card37 } from './svg'
+
+const ShowCard = (props) => (
+  <div className="dd">
+    <div></div>
+    <div><Card7/><Card8/></div>
+    <div><Card10/><Card11/><Card12/></div>
+    <div></div>
+    <div><Card17/><Card18/><Card19/><Card20/></div>
+    <div><Card22/></div>
+    <div><Card26/><Card27/><Card28/></div>
+    <div><Card31/><Card32/></div>
+    <div><Card35/><Card36/></div>
+    <div><Card37/><Card38/><Card39/><Card40/></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+)
 
 class App extends Component {
   constructor(props) {
@@ -86,6 +105,7 @@ class App extends Component {
     const { name, players, alreadyMember, allRoom, roomId, statusRoom, startGame} = this.state
     return (
       <div className="huhoh">
+        <ShowCard/>
         { players.length === 0 ?
             <Main 
               alreadyMember = {alreadyMember}

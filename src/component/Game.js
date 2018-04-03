@@ -1,5 +1,4 @@
 import React from 'react' 
-import { Card25, Card33, GenCard } from '../images/Card'
 
 export default class Game extends React.Component {
   constructor(props) {
