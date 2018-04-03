@@ -5,19 +5,19 @@ import OtherRoom from './component/OtherRoom'
 import PrepareRoom from './component/PrepareRoom'
 import Invite from './component/Invite'
 import Game from './component/Game'
-import { Card17, Card8, Card11,Card38, Card36, Card20, Card26, Card22, Card18, Card39,Card19, Card40, Card12, Card35, Card31, Card7, Card10,Card27, Card28, Card32, Card37 } from './svg'
+import { Card29,Card21,Card13,Card6, Card16, Card34, Card14, Card5, Card24, Card23, Card15, Card9, Card30, Card33, Card17, Card8, Card11,Card38, Card36, Card20, Card26, Card22, Card18, Card39,Card19, Card40, Card12, Card35, Card31, Card7, Card10,Card27, Card28, Card32, Card37 } from './svg'
 
 const ShowCard = (props) => (
   <div className="dd">
     <div></div>
-    <div><Card7/><Card8/></div>
-    <div><Card10/><Card11/><Card12/></div>
-    <div></div>
+    <div><Card5/><Card6/><Card7/><Card8/></div>
+    <div><Card9/><Card10/><Card11/><Card12/></div>
+    <div><Card13/><Card14/><Card15/><Card16/></div>
     <div><Card17/><Card18/><Card19/><Card20/></div>
-    <div><Card22/></div>
+    <div><Card21/><Card22/><Card23/><Card24/></div>
     <div><Card26/><Card27/><Card28/></div>
-    <div><Card31/><Card32/></div>
-    <div><Card35/><Card36/></div>
+    <div><Card29/><Card30/><Card31/><Card32/></div>
+    <div><Card33/><Card35/><Card34/><Card36/></div>
     <div><Card37/><Card38/><Card39/><Card40/></div>
     <div></div>
     <div></div>
