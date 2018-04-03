@@ -3,7 +3,7 @@ import React from 'react'
 const OtherRoom = (props) => {
   return (
     <div className="other-room-container">
-      <div className="all-room-title">
+      <div className="room-title">
         Other Room
       </div>
       <div className="room-list">
@@ -24,7 +24,7 @@ const RoomItem = (props) => {
   return (
     <div className="room-info">
       <div className="room-name">{ room.roomId }</div>
-      <div className="detail-info-room grid-info">
+        <div className="detail-info-room grid-info">
         <div className="title-room-hold">
           {room.players.map((p) => (
             <div key={ p.id } className="other-room-name">{p.name}</div>

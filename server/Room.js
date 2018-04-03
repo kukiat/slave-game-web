@@ -15,7 +15,6 @@ class Room {
     const player = this.players[indexPlayer]
     if(this.players.length === 0){
       ws.id = this.players.length + 1
-      ws.score = 500
       ws.cards = this.initialCard()
       ws.position = 'head'
       ws.ready = false
@@ -25,7 +24,6 @@ class Room {
       this.updatePlayer()
     }else if(!player) {
       ws.id = this.players.length + 1
-      ws.score = 500
       ws.position = 'normal'
       ws.ready = false
       ws.cards = this.initialCard()
@@ -36,7 +34,6 @@ class Room {
       ws.name = player.name
       ws.id = player.id
       ws.position = player.position
-      ws.score = player.score
       ws.ready = player.ready
       ws.cards = player.cards
       this.players[indexPlayer] = ws

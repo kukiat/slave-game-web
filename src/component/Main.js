@@ -1,19 +1,16 @@
 import React from 'react'
-import styled from 'styled-components';
+import styled,{keyframes} from 'styled-components';
 
 class Main extends React.Component {
   state = { name: '' }
   render() {
     return (
       <MainPage>
-        <GameTitle>21 Game</GameTitle>
+        <GameTitle>Slave Online</GameTitle>
         <Form>
           <InputName onChange={ (e) => this.setState({name: e.target.value}) }/>
           <BtnLogin onClick={ () => this.props.joinGame(this.state.name) }>JOIN</BtnLogin>
-          { this.props.alreadyMember 
-            ? <RejectedText>Already Player</RejectedText> 
-            : null 
-          }
+          { this.props.alreadyMember && <RejectedText>Already this name !!</RejectedText> }
         </Form>
       </MainPage>
     )
@@ -53,7 +50,7 @@ const InputName = styled.input.attrs({
   padding: 5px;
   font-size: 20px;
   text-indent:  1ex;
-  border: 1px solid #ddd;
+  border: 1px solid #FFF;
 `
 
 const BtnLogin = styled.div`

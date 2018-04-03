@@ -21,6 +21,7 @@ body{
   background: rgb(101, 194, 89);
   transition: 0.2s;
 }
+
 .rejected {
   font-size: 18px;
   margin: 5px 0 0 10px;
@@ -140,7 +141,7 @@ body{
 .pd-btn{
   margin: 5px 5px 5px 5px;
 }
-.all-room-title{
+.room-title{
   font-size: 26px;
   font-weight: bold;
   color:#83d0f2;
@@ -249,7 +250,7 @@ body{
 }
 .status-circle{
   border-radius: 50%;
-  background: green;
+  /* background: green; */
   height: 33px;
   width: 33px;
 }
