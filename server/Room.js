@@ -15,7 +15,6 @@ class Room {
     const player = this.players[indexPlayer]
     if(this.players.length === 0){
       ws.id = this.players.length + 1
-      ws.cards = this.initialCard()
       ws.position = 'head'
       ws.ready = false
       this.players.push(ws)
@@ -26,7 +25,6 @@ class Room {
       ws.id = this.players.length + 1
       ws.position = 'normal'
       ws.ready = false
-      ws.cards = this.initialCard()
       this.players.push(ws)
       allRoom.updateAllRoom()
       this.updatePlayer()
@@ -35,7 +33,7 @@ class Room {
       ws.id = player.id
       ws.position = player.position
       ws.ready = player.ready
-      ws.cards = player.cards
+      // ws.cards = player.cards
       this.players[indexPlayer] = ws
       this.updatePlayer()
     }else if(player && player.readyState === WebSocket.OPEN) {
@@ -82,13 +80,6 @@ class Room {
     }
   }
 
-  addNewCard(name) {
-    const newCard = Math.floor(Math.random() * 10) + 1
-    const player = this.players.find((p) => p.name === name) 
-    player.cards.push(newCard)
-    this.updatePlayer()
-  }
-
   initialCard() {
     return [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1] 
   }
@@ -105,8 +96,7 @@ class Room {
       position: p.position,
       status: p.readyState,
       id: p.id,
-      ready: p.ready,
-      cards: p.cards
+      ready: p.ready
     })) 
     // console.log('room -> ', this.roomId,' player ->' , player)
     this.players.map((p) => this.wss.send(p, JSON.stringify({ 
