@@ -4,6 +4,7 @@ import Main from './component/Main';
 import OtherRoom from './component/OtherRoom'
 import PrepareRoom from './component/PrepareRoom'
 import Invite from './component/Invite'
+import Game from './component/Game'
 
 class App extends Component {
   constructor(props) {
@@ -12,18 +13,17 @@ class App extends Component {
     const socket = new WebSocket(process.env.REACT_APP_SERVER_HOST || 'wss://' + window.location.host)
     const urlName = url && url.room
     socket.onopen = () => {
-      if(urlName) {
-        //this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name: this.refs.name.value, room: urlName}))
-        // console.log('opennnn')
-      }
+      console.log('onopen')
+        // this.setState({statusRoom: 'xxxxxx', startGame: true})
     }
     socket.onmessage = (message) => {
+      console.log('onmessage')
       const jsonData = JSON.parse(message.data)
       console.log(jsonData)
       if(jsonData.type === 'CREATED_ROOM') {
         window.history.replaceState('', '', `?room=${jsonData.room}`)
       }
-      if(jsonData.type === 'PLAYER_PREPARE') {
+      if(jsonData.type === 'PLAYER') {
         this.setState({
           players: jsonData.data,
           roomId: jsonData.roomId
@@ -35,12 +35,10 @@ class App extends Component {
       if(jsonData.type === 'ALREADY-PLAYER') {
         this.setState({ alreadyMember: true})
       }
-      if(jsonData.type === 'PLAYER_LESSTHAN_2') {
-        this.setState({ startGame: jsonData.type})
-      }
-      if(jsonData.type === 'NOT_READY') {
-        this.setState({ startGame: jsonData.type})
-      }
+      if(jsonData.type === 'PLAYER_LESSTHAN_2') this.setState({ statusRoom: jsonData.type})
+      if(jsonData.type === 'NOT_READY') this.setState({ statusRoom: jsonData.type})
+      if(jsonData.type === 'START_GAME') this.setState({ statusRoom: jsonData.type, startGame: true})
+      
     }
     this.state = {
       socket,
@@ -48,8 +46,9 @@ class App extends Component {
       players: [],
       alreadyMember: false,
       name: '',
-      startGame: 'WAITING',
-      allRoom:[]
+      statusRoom: 'WAITING',
+      allRoom: [],
+      startGame: false
     }
   }
 
@@ -62,18 +61,6 @@ class App extends Component {
       this.state.socket.send(JSON.stringify({type:'CREATE_ROOM', name}))
     }
     this.setState({ name: name })
-  }
-
-  addCard = () => {
-    const { name, roomId } = this.state
-    this.state.socket.send(JSON.stringify({
-      type: 'ADD_CARD',
-      name, roomId
-    }))
-  }
-
-  sendCard = () => {
-
   }
 
   onReady = (status) => {
@@ -96,7 +83,7 @@ class App extends Component {
   render() {
     const json = querystring.parse(window.location.search.substring(1));
     const urlInvite = `?room=${json.room}`
-    const { name, players, alreadyMember, allRoom, roomId, startGame} = this.state
+    const { name, players, alreadyMember, allRoom, roomId, statusRoom, startGame} = this.state
     return (
       <div className="huhoh">
         { players.length === 0 ?
@@ -105,7 +92,14 @@ class App extends Component {
               joinGame = {this.joinGame}
             />
             :
-            <div className="main-prepare">
+            startGame ?   
+              <Game
+                roomId={roomId}
+                players={players}
+                name={name}
+              />
+              : 
+              <div className="main-prepare">
               <Invite urlInvite={urlInvite}/>
               <div className="container-room">
                 <PrepareRoom 
@@ -113,34 +107,18 @@ class App extends Component {
                   players={players}
                   onReady={this.onReady}
                   onStartGame={this.onStartGame}
-                  startGame={startGame}
+                  statusRoom={statusRoom}
                   name={name}
                 />
                 <OtherRoom 
                   allRoom={allRoom}
                 />
               </div>
-            </div>  
+            </div>
         }
       </div>
     );
   }
-}
-
-function Card(props) {
-  return (
-    <div className='card'>
-      <h1 className='card-content'> Test {props.xxxx}</h1>
-    </div>
-  )
-}
-
-function EnemyCard() {
-  return (
-    <div className='card'>
-      <h1 className='card-content'>.</h1>
-    </div>
-  )
 }
 
 export default App;

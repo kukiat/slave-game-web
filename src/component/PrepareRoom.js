@@ -1,7 +1,7 @@
 import React from 'react'
 
 const PrepareRoom = (props) => {
-  const { players, onReady, roomId, onStartGame, startGame, name } = props
+  const { players, onReady, roomId, onStartGame, statusRoom, name } = props
   return (
     <div className="prepare-player-list">
       <div className="all-room-title">Room : {roomId}</div>
@@ -22,8 +22,8 @@ const PrepareRoom = (props) => {
           p.position === 'head' && name === p.name &&
             <div key={p.id}>
               <div className="btn-ready-start pd-btn" onClick={ onStartGame } >START GAME</div>
-              { startGame === 'PLAYER_LESSTHAN_2' &&  <div className="rejected">Player must have than 2</div> }
-              { startGame === 'NOT_READY' &&  <div className="rejected">All player not yet ready</div> }
+              { statusRoom === 'PLAYER_LESSTHAN_2' &&  <div className="rejected">Player must have than 2</div> }
+              { statusRoom === 'NOT_READY' &&  <div className="rejected">All player not yet ready</div> }
             </div>
           )
         )}

@@ -59,8 +59,11 @@ class Room {
 
   startGame(name) {
     const typeName = this.checkPlayer()
-    if(this.readyRoom){
-      console.log('start')
+    if(this.readyRoom) {
+      this.players.map(p => this.wss.send(p, JSON.stringify({ 
+        type: 'START_GAME'
+      })))
+      this.updatePlayer()
     }else{
       console.log('cannot start')
       const player = this.players.find((p)=> p.name === name)
@@ -110,7 +113,7 @@ class Room {
     })) 
     // console.log('room -> ', this.roomId,' player ->' , player)
     this.players.map((p) => this.wss.send(p, JSON.stringify({ 
-      type:'PLAYER_PREPARE', 
+      type: 'PLAYER', 
       roomId: this.roomId, 
       data: player
      })))

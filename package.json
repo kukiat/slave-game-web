@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bulma": "^0.6.2",
+    "deck-of-cards": "^0.1.8",
     "express": "^4.16.2",
     "moniker": "^0.1.2",
     "querystring": "^0.2.0",
