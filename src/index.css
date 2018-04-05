@@ -166,7 +166,7 @@ body{
 
 /* =======Game====== */
 .main-room{
-  margin-top: 80px;
+  margin-top: 70px;
   display: grid;
   grid-gap: 4px;
   grid-template-columns: 70% 30%;
@@ -203,29 +203,16 @@ body{
   padding: 8px 0px 0px 0px;
 }
 .player{
+  display: grid;
+  grid-template-columns: 15% 85%;
   font-size: 22px;
   color: black;
-  border-radius: 10px;
-  /* box-shadow: 0 0.1vh 3vh rgba(0, 0, 0, 0.1); */
   background: rgba(255, 255, 255, 0.9) linear-gradient(to top,rgba(240, 235, 235, 0.966),rgba(228, 218, 218, 0.904));
+  border-radius: 10px;
   padding: 7px 0px 0px 7px;  
-  display: flex;
 }
 .detail-title{
   display: grid;
-  grid-gap: 10px;
-}
-.add-card{
-  background: rgb(72, 173, 58);
-  width: 13%;
-  height: 25px;
-  padding: 3px;
-  border-radius: 5px;
-  padding: 5px 1px 0px 0px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 18px;
-  color: rgb(236, 236, 232);
 }
 .detail-title-name{
   font-size: 26px;
@@ -244,13 +231,13 @@ body{
   font-weight: bold;
   position: absolute;
   height: 50px;
-  top: 10px;
+  top: 0;
   right: 0;
   left: 0;
 }
 .status-circle{
   border-radius: 50%;
-  /* background: green; */
+  background: green;
   height: 33px;
   width: 33px;
 }

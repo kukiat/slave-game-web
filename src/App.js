@@ -17,9 +17,7 @@ class App extends Component {
         // this.setState({statusRoom: 'xxxxxx', startGame: true})
     }
     socket.onmessage = (message) => {
-      console.log('onmessage')
       const jsonData = JSON.parse(message.data)
-      console.log(jsonData)
       if(jsonData.type === 'CREATED_ROOM') {
         window.history.replaceState('', '', `?room=${jsonData.room}`)
       }
@@ -56,7 +54,13 @@ class App extends Component {
       startGame: false,
     }
   }
-
+  componentDidMount() {
+    if(module.hot) {
+      module.hot.accept('./component/Game', () => {
+        this.forceUpdate()
+      })
+    }
+  }
   joinGame = (name) => {
     const url = querystring.parse(window.location.search.substring(1))
     const urlName = url && url.room
@@ -102,6 +106,7 @@ class App extends Component {
                 roomId={roomId}
                 players={players}
                 name={name}
+                socket={this.state.socket}
               />
               : 
             <div className="main-prepare">

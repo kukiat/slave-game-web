@@ -1,27 +1,33 @@
 import React from 'react' 
 import Card from '../svg'
+import styled from 'styled-components';
 
-export default class Game extends React.Component {
+class Game extends React.Component {
   constructor(props) {
     super(props)
     const indexCurrenPlayer = props.players.findIndex(player => player.name === props.name)
+    props.socket.onmessage = message => {
+      const jsonData = JSON.parse(message.data)
+      console.log(jsonData)
+    }
     this.state = {
       enemyPlayers: props.players,
-      currentPlayer: props.players[indexCurrenPlayer]
+      currentPlayer: props.players[indexCurrenPlayer],
     }
   }
 
   render() {
-    console.log(this.state.currentPlayer.cards.sort())
+    const { enemyPlayers, currentPlayer } = this.state
     return (
       <div>
-        <div className="room-name-title">Room Name : xxxxx</div>
+        <div className="room-name-title">Room Name : {this.props.roomId}</div>
         <div className="main-room">
             <div className="grid-tpm room-player">
                 <div className="player">
                   <div className="detail-title">
-                      <div className="detail-title-name">kukiat</div>
-                      <div className="add-card">Send Card</div>
+                      <div className="detail-title-name">{currentPlayer.name}</div>
+                      <ButtonMedium >Send</ButtonMedium>
+                      <ButtonMedium >Pass</ButtonMedium>
                   </div>
                   <div className="detail-card">
                     { this.state.currentPlayer.cards.map((c, i) => (
@@ -43,7 +49,7 @@ export default class Game extends React.Component {
             </div>
             <div className="grid-tpm enemy-player">
                 <div className="player with-enemy">
-                  <div className="detail-title-name">Ta</div>
+                  <div className="detail-title-name">Taaaaaaatoung</div>
                 </div>
             </div>
             <div className="grid-tpm monitor-player">
@@ -67,3 +73,17 @@ export default class Game extends React.Component {
     )
   }
 }
+
+const ButtonMedium = styled.div`
+  background: rgb(72, 173, 58);
+  color: rgb(236, 236, 232);
+  width: 80%;
+  height: 25px;
+  border-radius: 5px;
+  padding: 5px 1px 0px 0px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 18px;
+`
+
+export default Game
