@@ -5,15 +5,19 @@ import styled from 'styled-components';
 class Game extends React.Component {
   constructor(props) {
     super(props)
-    const indexCurrenPlayer = props.players.findIndex(player => player.name === props.name)
     props.socket.onmessage = message => {
       const jsonData = JSON.parse(message.data)
       console.log(jsonData)
     }
     this.state = {
-      enemyPlayers: props.players,
-      currentPlayer: props.players[indexCurrenPlayer],
+      enemyPlayers: props.players.filter((p) => p.name !== props.name),
+      currentPlayer: props.players.find(player => player.name === props.name),
+      selectListCards: null
     }
+  }
+
+  selectCard = (number) => {
+    console.log(number)
   }
 
   render() {
@@ -31,7 +35,7 @@ class Game extends React.Component {
                   </div>
                   <div className="detail-card">
                     { this.state.currentPlayer.cards.map((c, i) => (
-                      <Card key={i} number={c} index={i}/>
+                      <Card key={i} selectCard={this.selectCard} number={c} index={i}/>
                     ))}
                   </div>
                 </div>
@@ -48,9 +52,18 @@ class Game extends React.Component {
               </div>
             </div>
             <div className="grid-tpm enemy-player">
-                <div className="player with-enemy">
-                  <div className="detail-title-name">Taaaaaaatoung</div>
-                </div>
+                { enemyPlayers.map(player => (
+                    <div className="player with-enemy">
+                      <div className="detail-title-name">{player.name}</div>
+                      <div className="detail-card">
+                        { player.cards.map((c, i) => (
+                            <Card key={i} number={5} index={i}/>
+                          ))
+                        }
+                      </div>
+                    </div>
+                  ))
+                }
             </div>
             <div className="grid-tpm monitor-player">
               <div className="chat-title bd-btm">Chat</div>

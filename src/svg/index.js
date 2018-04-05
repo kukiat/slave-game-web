@@ -15,10 +15,10 @@ import { Card41,Card42, Card43, Card44 } from './card11'
 import { Card45, Card46, Card47, Card48 } from './card12'
 import { Card49, Card50, Card51, Card52 } from './card13'
 
-export default (props) => {
-  const { number, index } = props
+const Card = (props) => {
+  const { number, index, selectCard } = props
   return (
-    <WrapCard index={index}>
+    <WrapCard onClick={() => selectCard(number)} index={index}>
       { number === 0 && <Card9/>}
       { number === 1 && <Card10/>}
       { number === 2 && <Card11/>}
@@ -75,6 +75,12 @@ export default (props) => {
   )
 }
 
+Card.defaultProps = {
+  selectCard: () => {},
+  index: 1,
+  number: 1
+}
+
 const WrapCard = styled.div`
   position: absolute;
   z-index: ${props => props.index};
@@ -82,3 +88,5 @@ const WrapCard = styled.div`
   width: 75px;
   height: 115px;
 `
+
+export default Card
