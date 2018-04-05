@@ -28,7 +28,8 @@ class Room {
       this.players.push(ws)
       allRoom.updateAllRoom()
       this.updatePlayer()
-    }else if(player && player.readyState !== WebSocket.OPEN){
+    }else if(player && player.readyState !== WebSocket.OPEN) {
+      console.log('reconnect', player.name)
       ws.name = player.name
       ws.id = player.id
       ws.position = player.position
@@ -55,12 +56,29 @@ class Room {
   startGame(name) {
     const typeName = this.checkPlayer()
     if(this.readyRoom) {
-      this.players.map(p => this.wss.send(p, JSON.stringify({ 
-        type: 'START_GAME'
-      })))
-      this.updatePlayer()
+      let cards = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,
+        26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51]
+      let check = true
+      let allArr = []
+      let index = 0
+      for(let i=0;i<this.players.length;i++) allArr.push([])
+      while(check) {
+        let number = Math.floor(Math.random() * cards.length)
+        allArr[index%this.players.length].push(cards[number])
+        cards.splice(number, 1)
+        index++
+        if(cards.length === 0) check = false
+      }
+      const players = this.players.map((p, i)=>({
+        id: p.id,
+        name: p.name,
+        position: p.position,
+        status: p.readyState,
+        ready: p.ready,
+        cards: allArr[i]
+      }))
+      this.players.map(p => this.wss.send(p, JSON.stringify({ type: 'START_GAME', players})))
     }else{
-      console.log('cannot start')
       const player = this.players.find((p)=> p.name === name)
       player.send(JSON.stringify({ type: typeName}))
     }
@@ -80,10 +98,6 @@ class Room {
     }
   }
 
-  initialCard() {
-    return [Math.floor(Math.random() * 5) + 1, Math.floor(Math.random() * 5) + 1] 
-  }
-
   changeReady(ready, name) {
     const player = this.players.find((p)=>p.name === name)
     player.ready = ready
@@ -92,13 +106,14 @@ class Room {
 
   updatePlayer() {  
     const player = this.players.map((p)=>({
+      id: p.id,
       name: p.name,
       position: p.position,
       status: p.readyState,
-      id: p.id,
       ready: p.ready
     })) 
-    // console.log('room -> ', this.roomId,' player ->' , player)
+    console.log('room -> ', this.roomId,' player ->' , player)
+    console.log('---------------------------------------------')
     this.players.map((p) => this.wss.send(p, JSON.stringify({ 
       type: 'PLAYER', 
       roomId: this.roomId, 

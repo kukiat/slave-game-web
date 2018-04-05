@@ -37,7 +37,12 @@ class App extends Component {
       }
       if(jsonData.type === 'PLAYER_LESSTHAN_2') this.setState({ statusRoom: jsonData.type})
       if(jsonData.type === 'NOT_READY') this.setState({ statusRoom: jsonData.type})
-      if(jsonData.type === 'START_GAME') this.setState({ statusRoom: jsonData.type, startGame: true})
+      if(jsonData.type === 'START_GAME') 
+        this.setState({ 
+          statusRoom: jsonData.type, 
+          startGame: true, 
+          players: jsonData.players
+        })
       
     }
     this.state = {
@@ -48,7 +53,7 @@ class App extends Component {
       name: '',
       statusRoom: 'WAITING',
       allRoom: [],
-      startGame: false
+      startGame: false,
     }
   }
 
