@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Card9 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(-810,657.64)">
         <rect x="810.5" y="-657.14" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m840-627.64c-5.54 0-10 4.46-10 10v5h5v-5c0-2.77 2.23-5 5-5s5 2.23 5 5v5c0 2.77-2.23 5-5 5h-5v5h5c2.77 0 5 2.23 5 5v10c0 2.77-2.23 5-5 5s-5-2.23-5-5v-5h-5v5c0 5.54 4.46 10 10 10s10-4.46 10-10v-10c0-3-1.323-5.67-3.406-7.5 2.083-1.83 3.406-4.496 3.406-7.5v-5c0-5.54-4.46-10-10-10"/>
@@ -19,7 +19,7 @@ export const Card9 = props => {
 
 export const Card10 = (props) => {
   return (
-    <svg className="card-style" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -38,7 +38,7 @@ export const Card10 = (props) => {
 
 export const Card11 = props => {
   return(
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.37)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -57,7 +57,7 @@ export const Card11 = props => {
 
 export const Card12 = (props) => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m30 542.36c-5.54 0-10 4.46-10 10v5h5v-5c0-2.77 2.23-5 5-5s5 2.23 5 5v5c0 2.77-2.23 5-5 5h-5v5h5c2.77 0 5 2.23 5 5v10c0 2.77-2.23 5-5 5s-5-2.23-5-5v-5h-5v5c0 5.54 4.46 10 10 10s10-4.46 10-10v-10c0-3-1.323-5.67-3.406-7.5 2.083-1.83 3.406-4.496 3.406-7.5v-5c0-5.54-4.46-10-10-10"/>

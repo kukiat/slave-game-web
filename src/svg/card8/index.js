@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Card29 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m30 542.36c-5.54 0-10 4.46-10 10v5c0 3 1.323 5.67 3.406 7.5-2.083 1.83-3.406 4.496-3.406 7.5v10c0 5.54 4.46 10 10 10s10-4.46 10-10v-10c0-3-1.323-5.67-3.406-7.5 2.083-1.83 3.406-4.496 3.406-7.5v-5c0-5.54-4.46-10-10-10m0 5c2.77 0 5 2.23 5 5v5c0 2.77-2.23 5-5 5s-5-2.23-5-5v-5c0-2.77 2.23-5 5-5m0 20c2.77 0 5 2.23 5 5v10c0 2.77-2.23 5-5 5s-5-2.23-5-5v-10c0-2.77 2.23-5 5-5"/>
@@ -24,7 +24,7 @@ export const Card29 = props => {
 
 export const Card30 = props => {
   return (
-    <svg className="card-style" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -48,7 +48,7 @@ export const Card30 = props => {
 
 export const Card31 = (props) => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(-2760 1797.6)">
         <rect x="2760.5" y="-1797.1" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -72,7 +72,7 @@ export const Card31 = (props) => {
 
 export const Card32 = (props) => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m30 542.36c-5.54 0-10 4.46-10 10v5c0 3 1.323 5.67 3.406 7.5-2.083 1.83-3.406 4.496-3.406 7.5v10c0 5.54 4.46 10 10 10s10-4.46 10-10v-10c0-3-1.323-5.67-3.406-7.5 2.083-1.83 3.406-4.496 3.406-7.5v-5c0-5.54-4.46-10-10-10m0 5c2.77 0 5 2.23 5 5v5c0 2.77-2.23 5-5 5s-5-2.23-5-5v-5c0-2.77 2.23-5 5-5m0 20c2.77 0 5 2.23 5 5v10c0 2.77-2.23 5-5 5s-5-2.23-5-5v-10c0-2.77 2.23-5 5-5"/>

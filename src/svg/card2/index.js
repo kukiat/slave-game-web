@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Card5 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m180 562.37c-3.999-0.082-6.667 1.333-9.333 4-2.667 2.667-4 5.333-4 9.333s1.518 6.372 4 9.333c2.375 2.833 4 4 5.333 6.666 1.333 2.667 2.667 8 2.667 10.666v4h-2.67c-2.667 0-8-2.667-9.333-4l-4-4c-2.667-2.667-5.333-4-9.333-4s-6.667 1.333-9.333 4c-2.667 2.667-4 5.333-4 9.333s1.333 6.666 4 9.333 5.333 4 9.333 4 6.667-1.333 9.333-4l4-4c1.333-1.333 6.667-4 9.333-4h2.667c-0.066 3.776-0.346 10.37-1.333 13.333-1.333 4-4 8-6.667 10.666-2.667 2.667-10.667 8-10.667 8v1.333s13.333-2.667 16-2.667h8c2.667 0 16 2.667 16 2.667v-1.333s-8-5.333-10.667-8-5.333-6.666-6.667-10.666c-0.988-2.963-1.267-9.557-1.333-13.333h2.67c2.667 0 8 2.667 9.333 4l4 4c2.667 2.667 5.333 4 9.333 4s6.667-1.333 9.333-4c2.667-2.667 4-5.333 4-9.333s-1.333-6.666-4-9.333-5.333-4-9.333-4-6.667 1.333-9.333 4l-4 4c-1.333 1.333-6.667 4-9.333 4h-2.667v-4c0-2.667 1.333-8 2.667-10.666 1.333-2.667 2.667-4 5.333-6.666 2.653-2.653 4-5.333 4-9.333s-1.333-6.666-4-9.333-5.333-4-9.333-4"/>
@@ -18,7 +18,7 @@ export const Card5 = props => {
 
 export const Card6 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -36,7 +36,7 @@ export const Card6 = props => {
 
 export const Card7 = (props) => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.37)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -54,7 +54,7 @@ export const Card7 = (props) => {
 
 export const Card8 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m30 542.36c-5.54 0-10 4.46-10 10v5h5v-5c0-2.77 2.23-5 5-5s5 2.23 5 5v5c0 1.128-0.375 3.065-1 3.9-4.463 9.104-9.278 17.13-14 26.1v5h20v-10h-5v5h-9.5c4.489-7.915 8.218-15.572 12.5-23.6 1.25-1.669 2-4.145 2-6.4v-5c0-5.54-4.46-10-10-10"/>

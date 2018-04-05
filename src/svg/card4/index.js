@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Card13 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m30 542.36-10 35v5h12v10h5v-10h3v-5h-3v-15h-5v15h-6.8l10-35z"/>
@@ -19,7 +19,7 @@ export const Card13 = props => {
 }
 export const Card14 = props => {
   return (
-    <svg className="card-style" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -38,7 +38,7 @@ export const Card14 = props => {
 }
 export const Card15 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -57,7 +57,7 @@ export const Card15 = props => {
 }
 export const Card16 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m30 542.36-10 35v5h12v10h5v-10h3v-5h-3v-15h-5v15h-6.8l10-35z"/>

@@ -104,7 +104,7 @@ class App extends Component {
                 name={name}
               />
               : 
-              <div className="main-prepare">
+            <div className="main-prepare">
               <Invite urlInvite={urlInvite}/>
               <div className="container-room">
                 <PrepareRoom 

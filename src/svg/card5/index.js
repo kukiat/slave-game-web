@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Card17 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m20 542.36v20h10c2.77 0 5 2.23 5 5v15c0 2.77-2.23 5-5 5s-5-2.23-5-5v-5h-5v5c0 5.54 4.46 10 10 10s10-4.46 10-10v-15c0-5.54-4.46-10-10-10h-5v-10h15v-5h-15z"/>
@@ -21,7 +21,7 @@ export const Card17 = props => {
 
 export const Card18 = props => {
   return (
-    <svg className="card-style" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -41,7 +41,7 @@ export const Card18 = props => {
 }
 export const Card19 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g fill="#f55">
@@ -63,7 +63,7 @@ export const Card19 = props => {
 
 export const Card20 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <path d="m20 542.36v20h10c2.77 0 5 2.23 5 5v15c0 2.77-2.23 5-5 5s-5-2.23-5-5v-5h-5v5c0 5.54 4.46 10 10 10s10-4.46 10-10v-15c0-5.54-4.46-10-10-10h-5v-10h15v-5h-15z"/>

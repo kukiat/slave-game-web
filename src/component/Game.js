@@ -1,15 +1,18 @@
 import React from 'react' 
+import Card from '../svg'
 
 export default class Game extends React.Component {
   constructor(props) {
     super(props)
-    const index = props.players.findIndex((player) => player.name === props.name)
+    const indexCurrenPlayer = props.players.findIndex(player => player.name === props.name)
     this.state = {
       enemyPlayers: props.players,
+      currentPlayer: props.players[indexCurrenPlayer]
     }
   }
 
   render() {
+    console.log(this.state.currentPlayer.cards.sort())
     return (
       <div>
         <div className="room-name-title">Room Name : xxxxx</div>
@@ -21,7 +24,9 @@ export default class Game extends React.Component {
                       <div className="add-card">Send Card</div>
                   </div>
                   <div className="detail-card">
-
+                    { this.state.currentPlayer.cards.map((c, i) => (
+                      <Card key={i} number={c} index={i}/>
+                    ))}
                   </div>
                 </div>
             </div>
@@ -29,7 +34,7 @@ export default class Game extends React.Component {
               <div className="status-player-title bd-btm">Player Status</div>
               <div className="status-player-scroll">
                 { this.state.enemyPlayers.map((enemyPlayer) => (
-                    <div className="status-player-detail">
+                    <div key={enemyPlayer.id} className="status-player-detail">
                       <div className="status-circle"></div>
                       <div className="status-name">{enemyPlayer.name}</div>
                     </div>
@@ -39,19 +44,6 @@ export default class Game extends React.Component {
             <div className="grid-tpm enemy-player">
                 <div className="player with-enemy">
                   <div className="detail-title-name">Ta</div>
-                  <div className="detail-title-name">500</div>
-                </div>
-                <div className="player with-enemy">
-                  <div className="detail-title-name">Ta</div>
-                  <div className="detail-title-name">500</div>
-                </div>
-                <div className="player with-enemy">
-                  <div className="detail-title-name">Ta</div>
-                  <div className="detail-title-name">500</div>
-                </div>
-                <div className="player with-enemy">
-                  <div className="detail-title-name">Ta</div>
-                  <div className="detail-title-name">500</div>
                 </div>
             </div>
             <div className="grid-tpm monitor-player">

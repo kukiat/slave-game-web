@@ -2,7 +2,7 @@ import React from 'react'
 
 export const Card37 = (props) => {
   return (
-    <svg  className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+    <svg  version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g transform="translate(5,22.362)">
@@ -32,7 +32,7 @@ export const Card37 = (props) => {
 
 export const Card39 = props => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g transform="translate(5,22.362)">
@@ -64,7 +64,7 @@ export const Card39 = props => {
 
 export const Card38 = props => {
   return (
-    <svg className="card-style" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+    <svg viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
       <g transform="translate(0-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g transform="translate(5 22.362)">
@@ -95,7 +95,7 @@ export const Card38 = props => {
 }
 export const Card40 = (props) => {
   return (
-    <svg className="card-style" version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+    <svg version="1.1" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
       <g transform="translate(0,-512.36)">
         <rect x=".5" y="512.86" width="359" height="539" rx="29.944" fill="#fff" stroke="#000"/>
         <g transform="translate(5,22.362)">
