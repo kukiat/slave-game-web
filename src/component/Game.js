@@ -25,6 +25,10 @@ class Game extends React.Component {
     if(!hasCard){
       selectListCards.push(number)
       this.setState({ selectListCards: selectListCards })
+    }else {
+      const index = selectListCards.findIndex((cardNumber) => cardNumber === number)
+      selectListCards.splice(index, 1)
+      this.setState({ selectListCards: selectListCards })
     }
   }
 
@@ -47,10 +51,9 @@ class Game extends React.Component {
                   <div className="detail-card">
                     { listCard.map((number, i) => {
                       const hasCard = selectListCards.find((cardNumber) => cardNumber === number)
-                      if(hasCard)
-                        return <Card select key={i} number={number} index={i}/>
-                      else 
-                        return <Card key={i} selectCard={this.selectCard} number={number} index={i}/>
+                      return hasCard ?
+                        <Card select key={i} selectCard={this.selectCard} number={number} index={i}/>
+                        : <Card key={i} selectCard={this.selectCard} number={number} index={i}/>
                     })
                     }
                   </div>
