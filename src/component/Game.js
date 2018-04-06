@@ -11,31 +11,28 @@ class Game extends React.Component {
     }
     const currentPlayer = props.players.find(player => player.name === props.name)
     this.state = {
-      enemyPlayers: props.players.filter((p) => p.name !== props.name),
+      enemyPlayers: props.players.filter(p => p.name !== props.name),
       currentPlayer,
       listCard: currentPlayer.cards.sort((p, c) => p - c),
       selectListCards: []
     }
   }
 
-  selectCard = (number) => {
+  selectCard = (number, select) => {
     const { selectListCards, listCard } = this.state
-    const hasCard = selectListCards.find((cardNumber) => cardNumber === number)
-    // const isTypeCard = 
-    if(!hasCard){
-      selectListCards.push(number)
-      this.setState({ selectListCards: selectListCards })
-    }else {
-      const index = selectListCards.findIndex((cardNumber) => cardNumber === number)
+    const hasCard = selectListCards.find(cardNumber => cardNumber === number)
+    const isSameType = selectListCards.find(cardNumber => Math.trunc((cardNumber - 1) / 4) === Math.trunc((number - 1) / 4))
+    if((!hasCard && selectListCards.length < 4 && isSameType) || selectListCards.length === 0)
+      this.setState({ selectListCards: selectListCards.concat(number) })
+    if(select) {
+      const index = selectListCards.findIndex(cardNumber => cardNumber === number)
       selectListCards.splice(index, 1)
       this.setState({ selectListCards: selectListCards })
     }
   }
-
   render() {
     const { roomId } = this.props
     const { enemyPlayers, currentPlayer, selectListCards, listCard } = this.state
-    console.log('listCard', listCard)
     console.log('selectListCards', selectListCards)
     return (
       <div>

@@ -18,7 +18,11 @@ import { Card49, Card50, Card51, Card52 } from './card13'
 const Card = (props) => {
   const { number, index, selectCard, select } = props
   return (
-    <WrapCard onClick={() => selectCard(number)} index={index} select={select}>
+    <WrapCard 
+      onClick={() => selectCard(number, select)} 
+      index={index} 
+      select={select}
+    >
       { number === 1 && <Card9/>}
       { number === 2 && <Card10/>}
       { number === 3 && <Card11/>}
@@ -63,10 +67,12 @@ const Card = (props) => {
       { number === 42 && <Card46/>}
       { number === 43 && <Card47/>}
       { number === 44 && <Card48/>}
+      
       { number === 45 && <Card49/>}
       { number === 46 && <Card50/>}
       { number === 47 && <Card51/>}
       { number === 48 && <Card52/>}
+
       { number === 49 && <Card5/>}
       { number === 50 && <Card6/>}
       { number === 51 && <Card7/>}
@@ -77,6 +83,7 @@ const Card = (props) => {
 
 Card.defaultProps = {
   selectCard: () => {},
+  select: false,
   index: 1,
   number: 1
 }
