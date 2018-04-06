@@ -10,10 +10,12 @@ class Room {
   }
 
   joinGame(ws) {
-    //create new player
     const indexPlayer  = this.players.findIndex((p) => p.name === ws.name)
-    const player = this.players[indexPlayer]
-    if(this.players.length === 0){
+    const player = this.players[indexPlayer]  
+    if(player && player.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type:'ALREADY-PLAYER'}))
+    }else if(this.players.length === 0){
+      console.log('sssssssssss')
       ws.id = this.players.length + 1
       ws.position = 'head'
       ws.ready = false
@@ -22,6 +24,7 @@ class Room {
       allRoom.updateAllRoom()
       this.updatePlayer()
     }else if(!player) {
+      console.log('create player')
       ws.id = this.players.length + 1
       ws.position = 'normal'
       ws.ready = false
@@ -37,8 +40,6 @@ class Room {
       // ws.cards = player.cards
       this.players[indexPlayer] = ws
       this.updatePlayer()
-    }else if(player && player.readyState === WebSocket.OPEN) {
-      ws.send(JSON.stringify({ type:'ALREADY-PLAYER'}))
     }
     
     ws.on('close', msg => {

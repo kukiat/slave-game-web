@@ -10,7 +10,8 @@ class Main extends React.Component {
         <Form>
           <InputName onChange={ (e) => this.setState({name: e.target.value}) }/>
           <BtnLogin onClick={ () => this.props.joinGame(this.state.name) }>JOIN</BtnLogin>
-          { this.props.alreadyMember && <RejectedText>Already this name !!</RejectedText> }
+          { this.props.validateName.alreadyMember && <RejectedText>Already this name !!</RejectedText> }
+          { this.props.validateName.name && <RejectedText>Name should be A-Z or 3-7 charactors</RejectedText> }
         </Form>
       </MainPage>
     )
@@ -64,9 +65,28 @@ const BtnLogin = styled.div`
   }
 `
 
+const shake = keyframes`
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+`
+
 const RejectedText = styled.div`
   font-size: 20px;
   margin-top: 10px;
-  color:red;
+  color: red;
+  animation: ${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both;
 `
 export default Main

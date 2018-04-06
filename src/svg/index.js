@@ -14,6 +14,7 @@ import { Card37,Card38, Card39, Card40 } from './card10'
 import { Card41,Card42, Card43, Card44 } from './card11'
 import { Card45, Card46, Card47, Card48 } from './card12'
 import { Card49, Card50, Card51, Card52 } from './card13'
+import { Screen } from './screen'
 
 const Card = (props) => {
   const { number, index, selectCard, select } = props
@@ -67,16 +68,15 @@ const Card = (props) => {
       { number === 42 && <Card46/>}
       { number === 43 && <Card47/>}
       { number === 44 && <Card48/>}
-      
       { number === 45 && <Card49/>}
       { number === 46 && <Card50/>}
       { number === 47 && <Card51/>}
       { number === 48 && <Card52/>}
-
       { number === 49 && <Card5/>}
       { number === 50 && <Card6/>}
       { number === 51 && <Card7/>}
       { number === 52 && <Card8/>}
+      { number === 53 && <Screen/>}
     </WrapCard>
   )
 }

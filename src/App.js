@@ -12,27 +12,18 @@ class App extends Component {
     const url = querystring.parse(window.location.search.substring(1))
     const socket = new WebSocket(process.env.REACT_APP_SERVER_HOST || 'wss://' + window.location.host)
     const urlName = url && url.room
-    socket.onopen = () => {
-      console.log('onopen')
-        // this.setState({statusRoom: 'xxxxxx', startGame: true})
-    }
+
     socket.onmessage = (message) => {
       const jsonData = JSON.parse(message.data)
-      if(jsonData.type === 'CREATED_ROOM') {
+      console.log(jsonData)
+      if(jsonData.type === 'CREATED_ROOM') 
         window.history.replaceState('', '', `?room=${jsonData.room}`)
-      }
-      if(jsonData.type === 'PLAYER') {
-        this.setState({
-          players: jsonData.data,
-          roomId: jsonData.roomId
-        })
-      }
-      if(jsonData.type === 'ALL_ROOM') {
-        this.setState({allRoom: jsonData.data})
-      }
-      if(jsonData.type === 'ALREADY-PLAYER') {
-        this.setState({ alreadyMember: true})
-      }
+      if(jsonData.type === 'PLAYER') this.setState({ players: jsonData.data, roomId: jsonData.roomId })
+      if(jsonData.type === 'ALL_ROOM') this.setState({allRoom: jsonData.data})
+      if(jsonData.type === 'ALREADY-PLAYER') 
+        this.setState({ validateName: Object.assign(this.state.validateName, {name: false, alreadyMember: true}) })
+      if(jsonData.type === 'NAME_FAIL') 
+        this.setState({ validateName: Object.assign(this.state.validateName, {name: true, alreadyMember: false}) })
       if(jsonData.type === 'PLAYER_LESSTHAN_2') this.setState({ statusRoom: jsonData.type})
       if(jsonData.type === 'NOT_READY') this.setState({ statusRoom: jsonData.type})
       if(jsonData.type === 'START_GAME') 
@@ -41,19 +32,19 @@ class App extends Component {
           startGame: true, 
           players: jsonData.players
         })
-      
     }
     this.state = {
       socket,
       roomId: '',
       players: [],
-      alreadyMember: false,
+      validateName: { name: false, alreadyMember: false },
       name: '',
       statusRoom: 'WAITING',
       allRoom: [],
       startGame: false,
     }
   }
+
   componentDidMount() {
     if(module.hot) {
       module.hot.accept('./component/Game', () => {
@@ -61,14 +52,14 @@ class App extends Component {
       })
     }
   }
+
   joinGame = (name) => {
     const url = querystring.parse(window.location.search.substring(1))
     const urlName = url && url.room
-    if(urlName){
+    if(urlName)
       this.state.socket.send(JSON.stringify({type:'JOIN-ROOM', name, room: urlName}))
-    }else{
+    else
       this.state.socket.send(JSON.stringify({type:'CREATE_ROOM', name}))
-    }
     this.setState({ name: name })
   }
 
@@ -92,12 +83,12 @@ class App extends Component {
   render() {
     const json = querystring.parse(window.location.search.substring(1));
     const urlInvite = `?room=${json.room}`
-    const { name, players, alreadyMember, allRoom, roomId, statusRoom, startGame} = this.state
+    const { name, players, validateName, allRoom, roomId, statusRoom, startGame} = this.state
     return (
       <div className="huhoh">
         { players.length === 0 ?
             <Main 
-              alreadyMember = {alreadyMember}
+              validateName = {validateName}
               joinGame = {this.joinGame}
             />
             :

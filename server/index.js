@@ -25,26 +25,30 @@ wss.on('connection', (ws, req) => {
         let haveRoom = jsonData.room && m.get(jsonData.room)
         let roomId =  jsonData.room
         ws.name = jsonData.name
-        if(haveRoom) {
+        const validateName = /^([A-Za-z0-9]{3,8})$/.test(ws.name)    
+        if(!validateName) ws.send(JSON.stringify({ type: 'NAME_FAIL'}))
+        else if(haveRoom) {
+          //join room
           m.get(roomId).joinGame(ws)
         }else {
+          //create new room
           m.set(roomId, new Room(wss, roomId))
           m.get(roomId).joinGame(ws)
         }
       }else if(jsonData.type === 'CREATE_ROOM') {
-        let roomId =  names.choose()
         ws.name = jsonData.name
         //create new room
-        m.set(roomId, new Room(wss, roomId))
-        m.get(roomId).joinGame(ws)
+        const validateName = /^([A-Za-z0-9]{3,8})$/.test(ws.name)    
+        if(!validateName) ws.send(JSON.stringify({ type: 'NAME_FAIL'}))
+        else {
+          let roomId =  names.choose()
+          m.set(roomId, new Room(wss, roomId))
+          m.get(roomId).joinGame(ws)
+        }
       }
       if(jsonData.type === 'READY_ROOM') {
         let { roomId, name, ready } = jsonData
         m.get(roomId).changeReady(ready, name)
-      }
-      if(jsonData.type === 'ADD_CARD') {
-        const { name, roomId } = jsonData
-        m.get(roomId).addNewCard(name)
       }
       if(jsonData.type === 'START_GAME') {
         const { roomId, name } = jsonData

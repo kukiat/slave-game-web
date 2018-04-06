@@ -32,6 +32,10 @@ class Game extends React.Component {
       this.setState({ selectListCards: selectListCards })
     }
   }
+
+  sendCard = () => {
+    console.log('sendCard')
+  }
   
   render() {
     const { roomId } = this.props
@@ -45,7 +49,7 @@ class Game extends React.Component {
                 <div className="player">
                   <div className="detail-title">
                       <div className="detail-title-name">{currentPlayer.name}</div>
-                      <ButtonMedium>Send</ButtonMedium>
+                      <ButtonMedium onClick={this.sendCard}>Send</ButtonMedium>
                       <ButtonMedium>Pass</ButtonMedium>
                   </div>
                   <div className="detail-card">
@@ -77,7 +81,7 @@ class Game extends React.Component {
                       <div className="detail-title-name">{player.name}</div>
                       <div className="detail-card">
                         { player.cards.map((c, i) => (
-                            <Card key={i} number={5} index={i}/>
+                            <Card key={i} number={53} index={i}/>
                           ))
                         }
                       </div>
@@ -96,10 +100,10 @@ class Game extends React.Component {
                 <div className="chat-info">Kukiat : prom yang wa</div>
                 <div className="chat-info">Kukiat : WTF why u so serius</div>
               </div>
-              <div className="chat-form">
+              <form className="chat-form">
                 <input className="chat-input bd-top" placeholder="Send a message" type="text"/>
                 <div className="chat-btn">Chat</div>
-              </div>
+              </form>
             </div>
         </div>
       </div>
