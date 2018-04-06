@@ -12,12 +12,13 @@ class Game extends React.Component {
     this.state = {
       enemyPlayers: props.players.filter((p) => p.name !== props.name),
       currentPlayer: props.players.find(player => player.name === props.name),
-      selectListCards: null
+      selectListCards: []
     }
   }
 
   selectCard = (number) => {
     console.log(number)
+
   }
 
   render() {
@@ -30,8 +31,8 @@ class Game extends React.Component {
                 <div className="player">
                   <div className="detail-title">
                       <div className="detail-title-name">{currentPlayer.name}</div>
-                      <ButtonMedium >Send</ButtonMedium>
-                      <ButtonMedium >Pass</ButtonMedium>
+                      <ButtonMedium>Send</ButtonMedium>
+                      <ButtonMedium>Pass</ButtonMedium>
                   </div>
                   <div className="detail-card">
                     { this.state.currentPlayer.cards.map((c, i) => (
@@ -89,12 +90,12 @@ class Game extends React.Component {
 
 const ButtonMedium = styled.div`
   background: rgb(72, 173, 58);
+  cursor: pointer;
   color: rgb(236, 236, 232);
   width: 80%;
   height: 25px;
   border-radius: 5px;
   padding: 5px 1px 0px 0px;
-  cursor: pointer;
   text-align: center;
   font-size: 18px;
 `
