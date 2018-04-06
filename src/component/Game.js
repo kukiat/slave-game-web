@@ -9,23 +9,33 @@ class Game extends React.Component {
       const jsonData = JSON.parse(message.data)
       console.log(jsonData)
     }
+    const currentPlayer = props.players.find(player => player.name === props.name)
     this.state = {
       enemyPlayers: props.players.filter((p) => p.name !== props.name),
-      currentPlayer: props.players.find(player => player.name === props.name),
+      currentPlayer,
+      listCard: currentPlayer.cards.sort((p, c) => p - c),
       selectListCards: []
     }
   }
 
   selectCard = (number) => {
-    console.log(number)
-
+    const { selectListCards, listCard } = this.state
+    const hasCard = selectListCards.find((cardNumber) => cardNumber === number)
+    // const isTypeCard = 
+    if(!hasCard){
+      selectListCards.push(number)
+      this.setState({ selectListCards: selectListCards })
+    }
   }
 
   render() {
-    const { enemyPlayers, currentPlayer } = this.state
+    const { roomId } = this.props
+    const { enemyPlayers, currentPlayer, selectListCards, listCard } = this.state
+    console.log('listCard', listCard)
+    console.log('selectListCards', selectListCards)
     return (
       <div>
-        <div className="room-name-title">Room Name : {this.props.roomId}</div>
+        <div className="room-name-title">Room Name : {roomId}</div>
         <div className="main-room">
             <div className="grid-tpm room-player">
                 <div className="player">
@@ -35,9 +45,14 @@ class Game extends React.Component {
                       <ButtonMedium>Pass</ButtonMedium>
                   </div>
                   <div className="detail-card">
-                    { this.state.currentPlayer.cards.map((c, i) => (
-                      <Card key={i} selectCard={this.selectCard} number={c} index={i}/>
-                    ))}
+                    { listCard.map((number, i) => {
+                      const hasCard = selectListCards.find((cardNumber) => cardNumber === number)
+                      if(hasCard) 
+                        return <Card select key={i} number={number} index={i}/>
+                      else 
+                        return <Card key={i} selectCard={this.selectCard} number={number} index={i}/>
+                    })
+                    }
                   </div>
                 </div>
             </div>
@@ -49,12 +64,13 @@ class Game extends React.Component {
                       <div className="status-circle"></div>
                       <div className="status-name">{enemyPlayer.name}</div>
                     </div>
-                ))}
+                  ))
+                }
               </div>
             </div>
             <div className="grid-tpm enemy-player">
                 { enemyPlayers.map(player => (
-                    <div className="player with-enemy">
+                    <div key={player.id} className="player with-enemy">
                       <div className="detail-title-name">{player.name}</div>
                       <div className="detail-card">
                         { player.cards.map((c, i) => (

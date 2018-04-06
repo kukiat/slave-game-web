@@ -305,10 +305,14 @@ body{
   color:rgb(255, 255, 255);
 }
 .detail-card{
-  display: flex;
-  padding-top: 10px;
+  display: grid;
+  margin-top: 10px;
 }
-.card-style{
+/* .card-style{
+  position: absolute;
+  z-index:0;
+  margin-left: 0px;
+  margin-top: 20px;
   width: 75px;
   height: 115px;
-}
+} */

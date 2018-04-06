@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactSVG from 'react-svg'
 
 export const Card49 = props => {
   return (
