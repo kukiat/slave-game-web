@@ -22,14 +22,17 @@ class Game extends React.Component {
     const { selectListCards, listCard } = this.state
     const hasCard = selectListCards.find(cardNumber => cardNumber === number)
     const isSameType = selectListCards.find(cardNumber => Math.trunc((cardNumber - 1) / 4) === Math.trunc((number - 1) / 4))
-    if((!hasCard && selectListCards.length < 4 && isSameType) || selectListCards.length === 0)
+    if(!hasCard && selectListCards.length < 4)
       this.setState({ selectListCards: selectListCards.concat(number) })
+    if(!isSameType)
+      this.setState({ selectListCards: [number] })
     if(select) {
       const index = selectListCards.findIndex(cardNumber => cardNumber === number)
       selectListCards.splice(index, 1)
       this.setState({ selectListCards: selectListCards })
     }
   }
+  
   render() {
     const { roomId } = this.props
     const { enemyPlayers, currentPlayer, selectListCards, listCard } = this.state
