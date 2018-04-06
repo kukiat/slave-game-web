@@ -306,13 +306,9 @@ body{
 }
 .detail-card{
   display: grid;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
-/* .card-style{
-  position: absolute;
-  z-index:0;
-  margin-left: 0px;
-  margin-top: 20px;
+.card-style{
   width: 75px;
-  height: 115px;
-} */
+  height: 113px;
+}

@@ -47,7 +47,7 @@ class Game extends React.Component {
                   <div className="detail-card">
                     { listCard.map((number, i) => {
                       const hasCard = selectListCards.find((cardNumber) => cardNumber === number)
-                      if(hasCard) 
+                      if(hasCard)
                         return <Card select key={i} number={number} index={i}/>
                       else 
                         return <Card key={i} selectCard={this.selectCard} number={number} index={i}/>
