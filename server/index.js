@@ -5,12 +5,11 @@ const WebSocket = require('ws')
 
 const uuidv1 = require('uuid/v1');
 const Room = require('./room.js')
+const randomstring = require('randomstring')
+
 const app = express()
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
-
-const Moniker = require('moniker');
-const names = Moniker.generator([Moniker.adjective, Moniker.noun, Moniker.verb]);
 
 const m = new Map()
 
@@ -41,7 +40,7 @@ wss.on('connection', (ws, req) => {
         const validateName = /^([A-Za-z0-9]{3,8})$/.test(ws.name)    
         if(!validateName) ws.send(JSON.stringify({ type: 'NAME_FAIL'}))
         else {
-          let roomId =  names.choose()
+          let roomId = randomstring.generate(6)
           m.set(roomId, new Room(wss, roomId))
           m.get(roomId).joinGame(ws)
         }
@@ -67,11 +66,11 @@ exports.destroyRoom = (roomId) => {
 
 exports.updateAllRoom = () => {
   const allRoomData = []
-  m.forEach((e) => {
+  m.forEach(room => {
     allRoomData.push({
-      roomId: e.roomId,
-      players: getPlayers(e.players),
-      readyRoom: e.readyRoom
+      roomId: room.roomId,
+      players: getPlayers(room.players),
+      readyRoom: room.readyRoom
     })
   })
   wss.broadcast(JSON.stringify({ type: 'ALL_ROOM', data: allRoomData }))
@@ -96,7 +95,7 @@ wss.send = (socket, data) => {
 
 wss.broadcast = (data) => {
   //send data to all
-  wss.clients.forEach((client) => {
+  wss.clients.forEach(client => {
     if(client.readyState === WebSocket.OPEN) {
       client.send(data);
     }

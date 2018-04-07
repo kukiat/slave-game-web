@@ -12,7 +12,6 @@ class Room {
   joinGame(ws) {
     const indexPlayer  = this.players.findIndex((p) => p.name === ws.name)
     const player = this.players[indexPlayer]
-    console.log(player)  
     if(player && player.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type:'ALREADY-PLAYER' }))
     }else if(this.players.length === 0){
