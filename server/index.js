@@ -61,11 +61,11 @@ wss.on('connection', (ws, req) => {
   }
 })
 
-exports.destroyRoom = function(roomId) {
+exports.destroyRoom = (roomId) => {
   m.delete(roomId)
 };
 
-exports.updateAllRoom = function() {
+exports.updateAllRoom = () => {
   const allRoomData = []
   m.forEach((e) => {
     allRoomData.push({
@@ -74,17 +74,16 @@ exports.updateAllRoom = function() {
       readyRoom: e.readyRoom
     })
   })
-  wss.broadcast(JSON.stringify({type: 'ALL_ROOM', data: allRoomData}))
+  wss.broadcast(JSON.stringify({ type: 'ALL_ROOM', data: allRoomData }))
 }
 
-function getPlayers(players) {
-  return players.map((p)=>({
-    name: p.name,
-    position: p.position,
-    status: p.readyState,
-    id: p.id,
-    ready: p.ready,
-    cards: p.cards
+const getPlayers = (players) => {
+  return players.map(player => ({
+    id: player.id,
+    name: player.name,
+    position: player.position,
+    status: player.readyState,
+    ready: player.ready
   }))  
 }
 

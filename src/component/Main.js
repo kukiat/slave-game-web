@@ -4,6 +4,7 @@ import styled,{keyframes} from 'styled-components';
 class Main extends React.Component {
   state = { name: '' }
   render() {
+    console.log('render')
     return (
       <MainPage>
         <GameTitle>Slave Online</GameTitle>
@@ -87,6 +88,6 @@ const RejectedText = styled.div`
   font-size: 20px;
   margin-top: 10px;
   color: red;
-  animation: ${shake} 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  animation: ${shake} 0.8s;
 `
 export default Main
