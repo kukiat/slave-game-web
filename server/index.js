@@ -60,11 +60,7 @@ wss.on('connection', (ws, req) => {
   }
 })
 
-exports.destroyRoom = (roomId) => {
-  m.delete(roomId)
-};
-
-exports.updateAllRoom = () => {
+const getPlayerAllRoom = () => {
   const allRoomData = []
   m.forEach(room => {
     allRoomData.push({
@@ -73,7 +69,7 @@ exports.updateAllRoom = () => {
       readyRoom: room.readyRoom
     })
   })
-  wss.broadcast(JSON.stringify({ type: 'ALL_ROOM', data: allRoomData }))
+  return allRoomData
 }
 
 const getPlayers = (players) => {
@@ -88,7 +84,7 @@ const getPlayers = (players) => {
 
 wss.send = (socket, data) => {
   //send data to 1 client
-  if (socket.readyState === WebSocket.OPEN) {
+  if(socket.readyState === WebSocket.OPEN) {
     socket.send(data);
   }
 }
@@ -101,6 +97,23 @@ wss.broadcast = (data) => {
     }
   });
 };
+
+wss.destroyRoom = (roomId) => {
+  m.delete(roomId)
+}
+
+wss.broadcastDataToPrepareRoom = () => {
+  //send data to client in Prepare-Room
+  wss.clients.forEach(client => {
+    if(client.readyState === WebSocket.OPEN) {
+      const playerInPrepareRoom = m.get(client.roomName).readyRoom
+      if(!playerInPrepareRoom) {
+        const allRoomData = getPlayerAllRoom()
+        client.send(JSON.stringify({ type: 'ALL_ROOM', data: allRoomData}))
+      }
+    }
+  })
+}
 
 server.listen(3001, () => {
   console.log(`server start port ${server.address().port}`);
