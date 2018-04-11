@@ -20,7 +20,7 @@ class Room {
       ws.ready = false
       this.players.push(ws)
       this.wss.send(ws, JSON.stringify({ type:'CREATED_ROOM', room: this.roomId, name: ws.name }))
-      this.wss.broadcastDataToPrepareRoom()
+      this.wss.updatePlayerInPrepareRoom()
       this.updatePlayer()
     }else if(!player) {
       console.log('create player')
@@ -29,11 +29,12 @@ class Room {
       ws.position = 'normal'
       ws.ready = false
       this.players.push(ws)
-      this.wss.broadcastDataToPrepareRoom()
+      this.wss.updatePlayerInPrepareRoom()
       this.updatePlayer()
     }else if(player && player.readyState !== WebSocket.OPEN) {
       console.log('reconnect', player.name)
       ws.name = player.name
+      ws.roomName = player.roomName,
       ws.id = player.id
       ws.position = player.position
       ws.ready = player.ready
@@ -45,11 +46,11 @@ class Room {
     ws.on('close', msg => {
       if(!this.readyRoom) {
         this.removePlayer()
-        this.wss.broadcastDataToPrepareRoom()
+        this.wss.updatePlayerInPrepareRoom()
       }
       if(this.players.length === 0) {
         this.wss.destroyRoom(this.roomId)
-        this.wss.broadcastDataToPrepareRoom()
+        this.wss.updatePlayerInPrepareRoom()
       }
     })
   }
@@ -78,8 +79,8 @@ class Room {
         ready: p.ready,
         cards: allArr[i]
       }))
-      this.players.map(p => this.wss.send(p, JSON.stringify({ type: 'START_GAME', players})))
-      this.wss.broadcastDataToPrepareRoom()
+      this.players.map(p => this.wss.send(p, JSON.stringify({ type: 'START_GAME', players })))
+      this.wss.updatePlayerInPrepareRoom()
     }else{
       const player = this.players.find((p)=> p.name === name)
       player.send(JSON.stringify({ type: typeName}))
@@ -101,7 +102,7 @@ class Room {
   }
 
   changeReady(ready, name) {
-    const player = this.players.find((p)=>p.name === name)
+    const player = this.players.find(p => p.name === name)
     player.ready = ready
     this.updatePlayer()
   }
@@ -110,6 +111,7 @@ class Room {
     const player = this.players.map((p)=>({
       id: p.id,
       name: p.name,
+      roomName: p.roomName,
       position: p.position,
       status: p.readyState,
       ready: p.ready
