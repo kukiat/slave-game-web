@@ -61,9 +61,8 @@ class Room {
       let cards = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,
         26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52]
       let check = true
-      let allArr = []
       let index = 0
-      for(let i=0;i<this.players.length;i++) allArr.push([])
+      const allArr = this.players.map(player => ([ ]))
       while(check) {
         let number = Math.floor(Math.random() * cards.length)
         allArr[index%this.players.length].push(cards[number])
@@ -71,7 +70,7 @@ class Room {
         index++
         if(cards.length === 0) check = false
       }
-      const players = this.players.map((p, i)=>({
+      const players = this.players.map((p, i) => ({
         id: p.id,
         name: p.name,
         position: p.position,
