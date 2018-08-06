@@ -2,6 +2,18 @@ import React from 'react'
 import Card from '../svg'
 import styled from 'styled-components';
 
+const ButtonMedium = styled.div`
+  background: rgb(72, 173, 58);
+  cursor: pointer;
+  color: rgb(236, 236, 232);
+  width: 80%;
+  height: 25px;
+  border-radius: 5px;
+  padding: 5px 1px 0px 0px;
+  text-align: center;
+  font-size: 18px;
+`
+
 class Game extends React.Component {
   constructor(props) {
     super(props)
@@ -75,6 +87,9 @@ class Game extends React.Component {
                 }
               </div>
             </div>
+            <div className="board">
+                
+            </div>
             <div className="grid-tpm enemy-player">
                 { enemyPlayers.map(player => (
                     <div key={player.id} className="player with-enemy">
@@ -110,17 +125,5 @@ class Game extends React.Component {
     )
   }
 }
-
-const ButtonMedium = styled.div`
-  background: rgb(72, 173, 58);
-  cursor: pointer;
-  color: rgb(236, 236, 232);
-  width: 80%;
-  height: 25px;
-  border-radius: 5px;
-  padding: 5px 1px 0px 0px;
-  text-align: center;
-  font-size: 18px;
-`
 
 export default Game

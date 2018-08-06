@@ -1,17 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
 
-const Invite = ({ urlInvite }) => {
-  return (
-    <InviteFriend>
-      <span className="invite-title">Invite friend </span>
-      <span className="invite-url">
-        <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
-      </span>
-    </InviteFriend>
-  )
-}
-
 const InviteFriend = styled.div`
   text-align: center;
   background: #FFFFFF;
@@ -32,5 +21,16 @@ const InviteFriend = styled.div`
     }
   }
 `
+
+const Invite = ({ urlInvite }) => {
+  return (
+    <InviteFriend>
+      <span className="invite-title">Invite friend </span>
+      <span className="invite-url">
+        <a href={urlInvite} target="_blank">{window.location.host}{urlInvite}</a>
+      </span>
+    </InviteFriend>
+  )
+}
 
 export default Invite

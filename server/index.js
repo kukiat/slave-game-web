@@ -1,6 +1,5 @@
 const express = require('express')
 const http = require('http')
-const url = require('url')
 const WebSocket = require('ws')
 
 const uuidv1 = require('uuid/v1');

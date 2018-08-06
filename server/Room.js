@@ -43,7 +43,7 @@ class Room {
       this.updatePlayer()
     }
     
-    ws.on('close', msg => {
+    ws.on('close', (msg) => {
       if(!this.readyRoom) {
         this.removePlayer()
         this.wss.updatePlayerInPrepareRoom()
@@ -63,23 +63,32 @@ class Room {
       let check = true
       let index = 0
       const allArr = this.players.map(player => ([ ]))
+      let indexCurrentShufflePlayer;
       while(check) {
         let number = Math.floor(Math.random() * cards.length)
-        allArr[index%this.players.length].push(cards[number])
+        let indexCard = index%this.players.length
+        let card = cards[number]
+        allArr[indexCard].push(card)
+        if(card === 1) indexCurrentShufflePlayer = indexCard
         cards.splice(number, 1)
         index++
+        
         if(cards.length === 0) check = false
       }
-      const players = this.players.map((p, i) => ({
-        id: p.id,
-        name: p.name,
-        position: p.position,
-        status: p.readyState,
-        ready: p.ready,
-        cards: allArr[i]
-      }))
+      const players = this.players.map((p, i) => {
+        this.players[i].cards = allArr[i]
+        return {
+          id: p.id,
+          name: p.name,
+          position: p.position,
+          status: p.readyState,
+          ready: p.ready,
+          cards: allArr[i]
+        }
+      })
       this.players.map(p => this.wss.send(p, JSON.stringify({ type: 'START_GAME', players })))
       this.wss.updatePlayerInPrepareRoom()
+      
     }else{
       const player = this.players.find((p)=> p.name === name)
       player.send(JSON.stringify({ type: typeName}))
@@ -98,6 +107,14 @@ class Room {
       }, 0) === this.players.length 
       return 'NOT_READY'
     }
+  }
+
+  getCurrentShufflePlayer(indexCurrentShufflePlayer) {
+    return this.players[indexCurrentShufflePlayer]
+  }
+
+  shufflePlayer(currentPlayer) {
+    return currentPlayer
   }
 
   changeReady(ready, name) {

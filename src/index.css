@@ -191,7 +191,7 @@ body{
 }
 .enemy-player{
   padding: 4px;      
-  grid-row: 3/10;
+  grid-row: 5/10;
   /* display: grid; */
   /* grid-gap: 4px; */
   overflow-x: scroll;
@@ -311,4 +311,8 @@ body{
 .card-style{
   width: 75px;
   height: 113px;
+}
+.board {
+  padding: 4px;
+  grid-row: 3/5;
 }

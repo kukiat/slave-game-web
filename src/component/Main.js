@@ -1,24 +1,6 @@
 import React from 'react'
 import styled,{keyframes} from 'styled-components';
 
-class Main extends React.Component {
-  state = { name: '' }
-  render() {
-    console.log('render')
-    return (
-      <MainPage>
-        <GameTitle>Slave Online</GameTitle>
-        <Form>
-          <InputName onChange={ (e) => this.setState({name: e.target.value}) }/>
-          <BtnLogin onClick={ () => this.props.joinGame(this.state.name) }>JOIN</BtnLogin>
-          { this.props.validateName.alreadyMember && <RejectedText>Already this name !!</RejectedText> }
-          { this.props.validateName.name && <RejectedText>Name should be A-Z or 3-7 charactors</RejectedText> }
-        </Form>
-      </MainPage>
-    )
-  }
-}
-
 const MainPage = styled.div`
   margin-top:40px;
   font-size: 40px;
@@ -90,4 +72,23 @@ const RejectedText = styled.div`
   color: red;
   animation: ${shake} 0.8s;
 `
+
+class Main extends React.Component {
+  state = { name: '' }
+  render() {
+    console.log('render')
+    return (
+      <MainPage>
+        <GameTitle>Slave Online</GameTitle>
+        <Form>
+          <InputName onChange={ (e) => this.setState({name: e.target.value}) }/>
+          <BtnLogin onClick={ () => this.props.joinGame(this.state.name) }>JOIN</BtnLogin>
+          { this.props.validateName.alreadyMember && <RejectedText>Already this name !!</RejectedText> }
+          { this.props.validateName.name && <RejectedText>Name should be A-Z or 3-7 charactors</RejectedText> }
+        </Form>
+      </MainPage>
+    )
+  }
+}
+
 export default Main
