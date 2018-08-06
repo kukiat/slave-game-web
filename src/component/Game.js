@@ -3,7 +3,6 @@ import Card from '../svg'
 import styled from 'styled-components';
 
 const ButtonMedium = styled.div`
-  background: rgb(72, 173, 58);
   cursor: pointer;
   color: rgb(236, 236, 232);
   width: 80%;
@@ -12,6 +11,22 @@ const ButtonMedium = styled.div`
   padding: 5px 1px 0px 0px;
   text-align: center;
   font-size: 18px;
+`
+
+const ButtonEnable = ButtonMedium.extend`
+  background-color: #00C853;
+  box-shadow: 2px 2px 1px #FEFEFE;
+  box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.14);
+  transition: background-color 0.4s;
+  &:hover {
+    background-color: #00E276;
+  }
+`
+
+const ButtonDisable = ButtonMedium.extend`
+  background-color: rgb(72, 173, 58);
+  opacity: 0.4;
+  cursor: no-drop;
 `
 
 class Game extends React.Component {
@@ -50,7 +65,8 @@ class Game extends React.Component {
   }
   
   render() {
-    const { roomId } = this.props
+    const { roomId, shufflePlayer } = this.props
+    console.log('shufflePlayer', shufflePlayer)
     const { enemyPlayers, currentPlayer, selectListCards, listCard } = this.state
     console.log('selectListCards', selectListCards)
     return (
@@ -61,8 +77,14 @@ class Game extends React.Component {
                 <div className="player">
                   <div className="detail-title">
                       <div className="detail-title-name">{currentPlayer.name}</div>
-                      <ButtonMedium onClick={this.sendCard}>Send</ButtonMedium>
-                      <ButtonMedium>Pass</ButtonMedium>
+                      { shufflePlayer.name === currentPlayer.name 
+                        ? <ButtonEnable onClick={this.sendCard}>Send</ButtonEnable> 
+                        : <ButtonDisable>Send</ButtonDisable> 
+                      }
+                      { shufflePlayer.name === currentPlayer.name 
+                        ? <ButtonEnable>Pass</ButtonEnable> 
+                        : <ButtonDisable>Send</ButtonDisable> 
+                      }
                   </div>
                   <div className="detail-card">
                     { listCard.map((number, i) => {

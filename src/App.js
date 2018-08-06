@@ -30,7 +30,8 @@ class App extends Component {
         this.setState({ 
           statusRoom: jsonData.type, 
           startGame: true, 
-          players: jsonData.players
+          players: jsonData.players,
+          shufflePlayer: jsonData.shufflePlayer
         })
     }
     this.state = {
@@ -42,6 +43,7 @@ class App extends Component {
       statusRoom: 'WAITING',
       allRoom: [],
       startGame: false,
+      shufflePlayer: {}
     }
   }
 
@@ -98,6 +100,7 @@ class App extends Component {
                 players={players}
                 name={name}
                 socket={this.state.socket}
+                shufflePlayer= {this.state.shufflePlayer}
               />
               : 
             <div className="main-prepare">

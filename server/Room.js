@@ -6,6 +6,7 @@ class Room {
     this.roomId = roomId
     this.players = []
     this.readyRoom = false
+    this.currentShufflePlayer = {}
   }
 
   joinGame(ws) {
@@ -14,7 +15,7 @@ class Room {
     if(player && player.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type:'ALREADY-PLAYER' }))
     }else if(this.players.length === 0){
-      ws.id = this.players.length + 1
+      ws.id = this.players.length
       ws.roomName = this.roomId
       ws.position = 'head'
       ws.ready = false
@@ -24,7 +25,7 @@ class Room {
       this.updatePlayer()
     }else if(!player) {
       console.log('create player')
-      ws.id = this.players.length + 1
+      ws.id = this.players.length
       ws.roomName = this.roomId
       ws.position = 'normal'
       ws.ready = false
@@ -86,7 +87,14 @@ class Room {
           cards: allArr[i]
         }
       })
-      this.players.map(p => this.wss.send(p, JSON.stringify({ type: 'START_GAME', players })))
+      this.currentShufflePlayer = this.getCurrentShufflePlayer(indexCurrentShufflePlayer)
+      this.players.map(p => this.wss.send(p, 
+        JSON.stringify({ 
+          type: 'START_GAME', 
+          players, 
+          shufflePlayer: this.currentShufflePlayer
+        })
+      ))
       this.wss.updatePlayerInPrepareRoom()
       
     }else{
@@ -110,7 +118,20 @@ class Room {
   }
 
   getCurrentShufflePlayer(indexCurrentShufflePlayer) {
-    return this.players[indexCurrentShufflePlayer]
+    const currentShufflePlayer = this.setDataPlayer(this.players[indexCurrentShufflePlayer])
+    return currentShufflePlayer
+  }
+
+  setDataPlayer(player) {
+    return {
+      id: player.id,
+      name: player.name,
+      position: player.position,
+      roomName: player.roomName,
+      status: player.readyState,
+      ready: player.ready,
+      cards: player.cards || []
+    }
   }
 
   shufflePlayer(currentPlayer) {
