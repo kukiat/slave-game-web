@@ -121,7 +121,6 @@ wss.updatePlayerInPrepareRoom = () => {
 
 //update data to client in Game
 wss.updateCenterCard = (roomName, data) => {
-  console.log(data)
   wss.clients.forEach(client => {
     if(client.readyState === WebSocket.OPEN) {
       if(client.roomName === roomName) {

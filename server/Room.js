@@ -112,7 +112,7 @@ class Room {
       const typeGame = selectListCards.length % 2
       if(this.centerCard.listCard.length == 0) this.centerCard.type = typeGame
       if(this.centerCard.type === typeGame) {
-        this.calculateCard(selectListCards)
+        this.calculateCard(selectListCards, player)
       }else {
         player.send(JSON.stringify({ 
           type: 'SEND_CARD_ERROR', 
@@ -132,14 +132,38 @@ class Room {
     this.currentShufflePlayer = this.setDataPlayer(this.players[(indexCurrenShufflePlayer + 1) % this.players.length])
   }
 
-  calculateCard(selectListCards) {
+  findMaxArray(arr) {
+    return arr.reduce((prev, curr) => prev > curr ? prev : curr)
+  }
+
+  calculateCard(selectListCards, player) {
     const { listCard } = this.centerCard
     if(listCard.length) {
-      
+      if(listCard[listCard.length - 1].length < selectListCards.length) {
+        listCard.push(selectListCards)
+      }else {
+        const maxListCard = this.findMaxArray(listCard[listCard.length - 1])
+        const maxSelectListCards = this.findMaxArray(selectListCards)
+        if(maxListCard < maxSelectListCards) {
+          listCard.push(selectListCards)
+          this.shufflePlayer(this.currentShufflePlayer)
+          this.wss.updateCenterCard(this.roomId, {
+            type: 'SEND_CARD_SUCCESS',
+            data: {
+              listCard,
+              shufflePlayer: this.currentShufflePlayer
+            },
+          })
+        }else {
+          player.send(JSON.stringify({ 
+            type: 'SEND_CARD_ERROR', 
+            data: 'Cannot send card' 
+          }))
+        }
+      }
     }else {
       listCard.push(selectListCards)
       this.shufflePlayer(this.currentShufflePlayer)
-      console.log(this.currentShufflePlayer)
       this.wss.updateCenterCard(this.roomId, {
         type: 'SEND_CARD_SUCCESS',
         data: {

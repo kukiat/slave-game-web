@@ -76,7 +76,6 @@ const RejectedText = styled.div`
 class Main extends React.Component {
   state = { name: '' }
   render() {
-    console.log('render')
     return (
       <MainPage>
         <GameTitle>Slave Online</GameTitle>
