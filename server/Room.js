@@ -7,6 +7,10 @@ class Room {
     this.players = []
     this.readyRoom = false
     this.currentShufflePlayer = {}
+    this.centerCard = {
+      type: null,
+      listCard: []
+    }
   }
 
   joinGame(ws) {
@@ -96,12 +100,55 @@ class Room {
         })
       ))
       this.wss.updatePlayerInPrepareRoom()
-      
     }else{
       const player = this.players.find((p)=> p.name === name)
       player.send(JSON.stringify({ type: typeName}))
     }
   }
+
+  evaluateCenterCard({ selectListCards, name }) {
+    const player = this.players.find(player => player.name === name)
+    if(selectListCards.length) {
+      const typeGame = selectListCards.length % 2
+      if(this.centerCard.listCard.length == 0) this.centerCard.type = typeGame
+      if(this.centerCard.type === typeGame) {
+        this.calculateCard(selectListCards)
+      }else {
+        player.send(JSON.stringify({ 
+          type: 'SEND_CARD_ERROR', 
+          data: 'not match type game' 
+        }))
+      }
+    }else {
+      player.send(JSON.stringify({ 
+        type: 'SEND_CARD_ERROR', 
+        data: 'not select card' 
+      }))
+    }
+  }
+
+  shufflePlayer({ name }) {
+    const indexCurrenShufflePlayer = this.players.findIndex(player => player.name === name)
+    this.currentShufflePlayer = this.setDataPlayer(this.players[(indexCurrenShufflePlayer + 1) % this.players.length])
+  }
+
+  calculateCard(selectListCards) {
+    const { listCard } = this.centerCard
+    if(listCard.length) {
+      
+    }else {
+      listCard.push(selectListCards)
+      this.shufflePlayer(this.currentShufflePlayer)
+      console.log(this.currentShufflePlayer)
+      this.wss.updateCenterCard(this.roomId, {
+        type: 'SEND_CARD_SUCCESS',
+        data: {
+          listCard,
+          shufflePlayer: this.currentShufflePlayer
+        },
+      })
+    }
+  } 
   
   checkPlayer() {
     if(this.players.length < 2) {
@@ -132,10 +179,6 @@ class Room {
       ready: player.ready,
       cards: player.cards || []
     }
-  }
-
-  shufflePlayer(currentPlayer) {
-    return currentPlayer
   }
 
   changeReady(ready, name) {

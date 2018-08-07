@@ -52,6 +52,10 @@ wss.on('connection', (ws) => {
         const { roomId, name } = jsonData
         rooms.get(roomId).startGame(name)
       }
+      if(jsonData.type === 'SEND_CARD') {
+        const { roomId  } = jsonData.data
+        rooms.get(roomId).evaluateCenterCard(jsonData.data)
+      }
     })
     ws.on('error', (msg) => console.error(msg))
   }catch(e) {
@@ -110,6 +114,18 @@ wss.updatePlayerInPrepareRoom = () => {
       if(!statusPlayerInGame) {
         const data = getPlayerAllRoom()
         client.send(JSON.stringify({ type: 'ALL_ROOM', data }))
+      }
+    }
+  })
+}
+
+//update data to client in Game
+wss.updateCenterCard = (roomName, data) => {
+  console.log(data)
+  wss.clients.forEach(client => {
+    if(client.readyState === WebSocket.OPEN) {
+      if(client.roomName === roomName) {
+        client.send(JSON.stringify(data))
       }
     }
   })

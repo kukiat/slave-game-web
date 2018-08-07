@@ -92,7 +92,7 @@ const WrapCard = styled.div`
   position: absolute;
   z-index: ${props => props.index};
   margin-left: ${props => props.index * 20}px;
-  margin-top: ${props => props.select ? 10 : 0}px;
+  margin-top: ${props => props.select ? -10 : 0}px;
   width: 75px;
   height: 115px;
 `

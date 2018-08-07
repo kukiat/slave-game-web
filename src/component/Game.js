@@ -1,6 +1,6 @@
 import React from 'react' 
 import Card from '../svg'
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 const ButtonMedium = styled.div`
   cursor: pointer;
@@ -15,7 +15,6 @@ const ButtonMedium = styled.div`
 
 const ButtonEnable = ButtonMedium.extend`
   background-color: #00C853;
-  box-shadow: 2px 2px 1px #FEFEFE;
   box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.14);
   transition: background-color 0.4s;
   &:hover {
@@ -26,22 +25,34 @@ const ButtonEnable = ButtonMedium.extend`
 const ButtonDisable = ButtonMedium.extend`
   background-color: rgb(72, 173, 58);
   opacity: 0.4;
-  cursor: no-drop;
+  cursor: default;
 `
+
+const AlertSelectCard = styled.div`
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  top: 145px;
+  left: 330px;
+  background: red;
+  z-index: 100;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  padding: 5px;
+  box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, 0.14);
+`
+
 
 class Game extends React.Component {
   constructor(props) {
     super(props)
-    props.socket.onmessage = message => {
-      const jsonData = JSON.parse(message.data)
-      console.log(jsonData)
-    }
     const currentPlayer = props.players.find(player => player.name === props.name)
     this.state = {
       enemyPlayers: props.players.filter(p => p.name !== props.name),
       currentPlayer,
       listCard: currentPlayer.cards.sort((p, c) => p - c),
-      selectListCards: []
+      selectListCards: [],
     }
   }
 
@@ -61,14 +72,18 @@ class Game extends React.Component {
   }
 
   sendCard = () => {
-    console.log('sendCard')
+    const { selectListCards, currentPlayer } = this.state
+    const { roomId } = this.props
+    this.props.socket.send(JSON.stringify({
+      type:'SEND_CARD', 
+      data: {...currentPlayer, selectListCards, roomId}
+    }))
   }
   
+
   render() {
-    const { roomId, shufflePlayer } = this.props
-    console.log('shufflePlayer', shufflePlayer)
-    const { enemyPlayers, currentPlayer, selectListCards, listCard } = this.state
-    console.log('selectListCards', selectListCards)
+    const { roomId, game } = this.props
+    const { enemyPlayers, currentPlayer, selectListCards, listCard, centerCard } = this.state
     return (
       <div>
         <div className="room-name-title">Room Name : {roomId}</div>
@@ -77,11 +92,11 @@ class Game extends React.Component {
                 <div className="player">
                   <div className="detail-title">
                       <div className="detail-title-name">{currentPlayer.name}</div>
-                      { shufflePlayer.name === currentPlayer.name 
+                      { game.shufflePlayer.name === currentPlayer.name 
                         ? <ButtonEnable onClick={this.sendCard}>Send</ButtonEnable> 
                         : <ButtonDisable>Send</ButtonDisable> 
                       }
-                      { shufflePlayer.name === currentPlayer.name 
+                      { game.shufflePlayer.name === currentPlayer.name 
                         ? <ButtonEnable>Pass</ButtonEnable> 
                         : <ButtonDisable>Send</ButtonDisable> 
                       }
@@ -95,6 +110,7 @@ class Game extends React.Component {
                     })
                     }
                   </div>
+                  { !game.sendCard.status && <AlertSelectCard>Please select card</AlertSelectCard>}
                 </div>
             </div>
             <div className="grid-tpm status-player">
@@ -110,7 +126,21 @@ class Game extends React.Component {
               </div>
             </div>
             <div className="board">
-                
+              <div className="detail-card">
+                {
+                  game.currentDeck.map(listCard => {
+                    return (
+                      <div style={{marginLeft: '10px'}}>
+                        { listCard.map((card, i) => {
+                          return (
+                            <Card key={i} number={card} index={i}/>
+                          )
+                        })}
+                      </div>
+                    )
+                  })
+                }
+              </div>
             </div>
             <div className="grid-tpm enemy-player">
                 { enemyPlayers.map(player => (

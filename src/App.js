@@ -15,7 +15,7 @@ class App extends Component {
 
     socket.onmessage = (message) => {
       const jsonData = JSON.parse(message.data)
-      console.log(jsonData)
+      // console.log(jsonData)
       if(jsonData.type === 'CREATED_ROOM') 
         window.history.replaceState('', '', `?room=${jsonData.room}`)
       if(jsonData.type === 'PLAYER') this.setState({ players: jsonData.data, roomId: jsonData.roomId })
@@ -26,13 +26,38 @@ class App extends Component {
         this.setState({ validateName: Object.assign(this.state.validateName, {name: true, alreadyMember: false}) })
       if(jsonData.type === 'PLAYER_LESSTHAN_2') this.setState({ statusRoom: jsonData.type})
       if(jsonData.type === 'NOT_READY') this.setState({ statusRoom: jsonData.type})
-      if(jsonData.type === 'START_GAME') 
+      if(jsonData.type === 'START_GAME') {
         this.setState({ 
           statusRoom: jsonData.type, 
           startGame: true, 
           players: jsonData.players,
-          shufflePlayer: jsonData.shufflePlayer
+          game: Object.assign(this.state.game, { shufflePlayer: jsonData.shufflePlayer })
         })
+      }
+      if(jsonData.type === 'SEND_CARD_ERROR') {
+        this.setState({
+          game: Object.assign(this.state.game, { sendCard:  { status: false } })
+        })
+      }
+      if(jsonData.type === 'SEND_CARD_SUCCESS') {
+        const cards = this.state.players.find(player => player.name === this.state.name).cards
+        jsonData.data.listCard[jsonData.data.listCard.length - 1].forEach(card => {
+          const indexCard = cards.indexOf(card)
+          cards.splice(indexCard, 1)
+        })
+        this.setState({
+          game: Object.assign(
+            this.state.game, {
+              shufflePlayer: jsonData.data.shufflePlayer, 
+              currentDeck: jsonData.data.listCard, 
+              sendCard:  { 
+                status: true 
+              }
+            }
+          )
+        })
+      }
+        
     }
     this.state = {
       socket,
@@ -43,7 +68,13 @@ class App extends Component {
       statusRoom: 'WAITING',
       allRoom: [],
       startGame: false,
-      shufflePlayer: {}
+      game: {
+        shufflePlayer: {},
+        currentDeck: [],
+        sendCard: {
+          status: true
+        }
+      }
     }
   }
 
@@ -100,7 +131,7 @@ class App extends Component {
                 players={players}
                 name={name}
                 socket={this.state.socket}
-                shufflePlayer= {this.state.shufflePlayer}
+                game= {this.state.game}
               />
               : 
             <div className="main-prepare">
